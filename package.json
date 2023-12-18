@@ -14,6 +14,7 @@
     "@nuxt/devtools": "latest",
     "element-plus": "^2.4.4",
     "nuxt": "^3.8.2",
+    "oxlint": "^0.0.21",
     "vue": "^3.3.12",
     "vue-router": "^4.2.5"
   }
