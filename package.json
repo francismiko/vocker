@@ -1,23 +1,24 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.4.1",
-    "@element-plus/nuxt": "^1.0.7",
-    "nuxt": "^3.8.2",
-    "vue": "^3.3.12",
-    "vue-router": "^4.2.5"
-  },
-  "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "element-plus": "^2.4.4"
-  }
+	"name": "nuxt-app",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.4.1",
+		"@element-plus/nuxt": "^1.0.7",
+		"@nuxtjs/tailwindcss": "latest",
+		"nuxt": "^3.8.2",
+		"vue": "^3.3.12",
+		"vue-router": "^4.2.5"
+	},
+	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"element-plus": "^2.4.4"
+	}
 }

@@ -2,5 +2,5 @@ export default defineNuxtConfig({
 	typescript: {
 		shim: false,
 	},
-	modules: ["@element-plus/nuxt"],
+	modules: ["@element-plus/nuxt", "@nuxtjs/tailwindcss"],
 });
