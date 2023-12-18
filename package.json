@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.4.1",
     "@element-plus/nuxt": "^1.0.7",
     "@nuxt/devtools": "latest",
     "element-plus": "^2.4.4",
