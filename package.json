@@ -12,13 +12,12 @@
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
     "@element-plus/nuxt": "^1.0.7",
-    "@nuxt/devtools": "latest",
-    "element-plus": "^2.4.4",
     "nuxt": "^3.8.2",
     "vue": "^3.3.12",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8"
+    "@popperjs/core": "^2.11.8",
+    "element-plus": "^2.4.4"
   }
 }
