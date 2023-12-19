@@ -1,5 +1,25 @@
+<script setup lang="ts">
+import { Search, Setting } from '@element-plus/icons-vue'
+
+const activeIndex = ref<string>('')
+</script>
+
 <template>
-  <div>
-    Header
-  </div>
+  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false">
+    <el-menu-item>
+      <NuxtImg src="docker-full.png" sizes="48"/>
+    </el-menu-item>
+
+    <div class="flex items-center w-1/3">
+      <el-input class="mx-4" placeholder="搜索..." :prefix-icon="Search" />
+    </div>
+
+    <div class="flex-grow" />
+
+    <el-menu-item index="setting">
+      <el-icon>
+        <Setting />
+      </el-icon>
+    </el-menu-item>
+  </el-menu>
 </template>

@@ -1,11 +1,11 @@
 <template>
-  <div class="common-layout">
+  <div class="h-screen common-layout">
     <el-container>
       <el-header>
         <Header />
       </el-header>
       <el-container>
-        <el-aside width="200px">
+        <el-aside>
           <Sidebar />
         </el-aside>
         <el-main>
