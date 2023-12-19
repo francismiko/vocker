@@ -1,6 +1,6 @@
 import si from "systeminformation";
 
-type HardwareInfo = {
+export type HardwareInfo = {
 	manufacturer?: string;
 	model?: string;
 	memMax?: string;
@@ -17,7 +17,7 @@ type HardwareInfo = {
 	diskVendor?: string;
 };
 
-type SoftwareInfo = {
+export type SoftwareInfo = {
 	platform?: string;
 	distro?: string;
 	release?: string;
@@ -32,7 +32,7 @@ type SoftwareInfo = {
 	virtualbox?: string;
 };
 
-type NetworkInfo = {
+export type NetworkInfo = {
 	iface?: string;
 	ip4?: string;
 	ip4subnet?: string;
@@ -46,7 +46,7 @@ type NetworkInfo = {
 	dhcp?: string;
 };
 
-type HostInfo = {
+export type HostInfo = {
 	hardwareInfo: HardwareInfo;
 	softwareInfo: SoftwareInfo;
 	networkInfo: NetworkInfo;
