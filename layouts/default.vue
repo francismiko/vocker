@@ -1,17 +1,17 @@
 <template>
-  <div class="h-screen common-layout">
+  <el-container class="h-full common-layout">
+    <el-header height="8vh">
+      <Header />
+    </el-header>
     <el-container>
-      <el-header>
-        <Header />
-      </el-header>
-      <el-container>
-        <el-aside>
-          <Sidebar />
-        </el-aside>
-        <el-main>
+      <el-aside width="auto">
+        <Sidebar />
+      </el-aside>
+      <el-main>
+        <el-scrollbar height="85vh">
           <slot />
-        </el-main>
-      </el-container>
+        </el-scrollbar>
+      </el-main>
     </el-container>
-  </div>
+  </el-container>
 </template>
