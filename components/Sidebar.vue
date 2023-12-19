@@ -1,13 +1,18 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
+  CopyDocument,
+  Odometer,
+  Box,
+  Reading,
+  Clock,
+  ChatLineSquare,
+  Files,
+  Monitor,
+  CreditCard
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref(true)
+const isCollapse = ref(false)
 
 </script>
 
@@ -19,45 +24,92 @@ const isCollapse = ref(true)
       </el-button>
     </li>
 
-    <el-sub-menu index="1">
-      <template #title>
-        <el-icon>
-          <location />
-        </el-icon>
-        <span>Navigator One</span>
-      </template>
-      <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
+    <el-menu-item-group>
+      <template #title>仪表盘</template>
+      <el-sub-menu index="dashboard">
+        <template #title>
+          <el-icon>
+            <Odometer />
+          </el-icon>
+          <span>性能监控</span>
+        </template>
+        <el-menu-item index="dashboard-overview">概览</el-menu-item>
       </el-sub-menu>
-    </el-sub-menu>
 
-    <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
-      <template #title>Navigator Two</template>
-    </el-menu-item>
+      <el-sub-menu index="container">
+        <template #title>
+          <el-icon>
+            <Box />
+          </el-icon>
+          <span>容器管理</span>
+        </template>
+        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+      </el-sub-menu>
 
-    <el-menu-item index="3" disabled>
-      <el-icon>
-        <document />
-      </el-icon>
-      <template #title>Navigator Three</template>
-    </el-menu-item>
+      <el-sub-menu index="image">
+        <template #title>
+          <el-icon>
+            <CopyDocument />
+          </el-icon>
+          <span>镜像管理</span>
+        </template>
+        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+      </el-sub-menu>
 
-    <el-menu-item index="4">
-      <el-icon>
-        <setting />
-      </el-icon>
-      <template #title>Navigator Four</template>
-    </el-menu-item>
+      <el-sub-menu index="network">
+        <template #title>
+          <el-icon>
+            <Monitor />
+          </el-icon>
+          <span>网络管理</span>
+        </template>
+        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+      </el-sub-menu>
+
+      <el-sub-menu index="Volume">
+        <template #title>
+          <el-icon>
+            <Files />
+          </el-icon>
+          <span>数据卷</span>
+        </template>
+        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+      </el-sub-menu>
+
+      <el-sub-menu index="cron">
+        <template #title>
+          <el-icon>
+            <Clock />
+          </el-icon>
+          <span>定时任务</span>
+        </template>
+        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+      </el-sub-menu>
+
+      <el-menu-item index="command">
+        <el-icon>
+          <CreditCard />
+        </el-icon>
+        <template #title>命令行</template>
+      </el-menu-item>
+    </el-menu-item-group>
+
+    <el-menu-item-group>
+      <template #title>其他</template>
+      <el-menu-item index="help">
+        <el-icon>
+          <Reading />
+        </el-icon>
+        <template #title>帮助文档</template>
+      </el-menu-item>
+
+      <el-menu-item index="feedback">
+        <el-icon>
+          <ChatLineSquare />
+        </el-icon>
+        <template #title>反馈</template>
+      </el-menu-item>
+    </el-menu-item-group>
   </el-menu>
 </template>
 
