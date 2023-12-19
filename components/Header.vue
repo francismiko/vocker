@@ -2,11 +2,12 @@
 import { Search, Setting } from '@element-plus/icons-vue'
 
 const activeIndex = ref<string>('')
+const router = useRouter()
 </script>
 
 <template>
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false">
-    <el-menu-item>
+    <el-menu-item @click="router.push('/')">
       <NuxtImg src="docker-full.png" sizes="48" />
     </el-menu-item>
 

@@ -13,7 +13,7 @@ import {
 } from '@element-plus/icons-vue'
 
 const isCollapse = ref(false)
-
+const router = useRouter()
 </script>
 
 <template>
@@ -26,24 +26,25 @@ const isCollapse = ref(false)
 
     <el-menu-item-group>
       <template #title>仪表盘</template>
-      <el-sub-menu index="dashboard">
+      <el-sub-menu index="monitor">
         <template #title>
           <el-icon>
             <Odometer />
           </el-icon>
           <span>性能监控</span>
         </template>
-        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+        <el-menu-item index="monitor-overview">概览</el-menu-item>
+        <el-menu-item index="monitor-host" @click="router.push('/monitor/host')">主机信息</el-menu-item>
       </el-sub-menu>
 
-      <el-sub-menu index="container">
+      <el-sub-menu index=" container">
         <template #title>
           <el-icon>
             <Box />
           </el-icon>
           <span>容器管理</span>
         </template>
-        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+        <el-menu-item index="">概览</el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="image">
@@ -53,7 +54,7 @@ const isCollapse = ref(false)
           </el-icon>
           <span>镜像管理</span>
         </template>
-        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+        <el-menu-item index="">概览</el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="network">
@@ -63,7 +64,7 @@ const isCollapse = ref(false)
           </el-icon>
           <span>网络管理</span>
         </template>
-        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+        <el-menu-item index="">概览</el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="Volume">
@@ -73,7 +74,7 @@ const isCollapse = ref(false)
           </el-icon>
           <span>数据卷</span>
         </template>
-        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+        <el-menu-item index="">概览</el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="cron">
@@ -83,7 +84,7 @@ const isCollapse = ref(false)
           </el-icon>
           <span>定时任务</span>
         </template>
-        <el-menu-item index="dashboard-overview">概览</el-menu-item>
+        <el-menu-item index="">概览</el-menu-item>
       </el-sub-menu>
 
       <el-menu-item index="command">
