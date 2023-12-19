@@ -37,26 +37,26 @@ const router = useRouter()
         <el-menu-item index="monitor-host" @click="router.push('/monitor/host')">主机信息</el-menu-item>
       </el-sub-menu>
 
-      <el-sub-menu index="container">
+      <el-sub-menu index="docker-container">
         <template #title>
           <el-icon>
             <Box />
           </el-icon>
           <span>容器管理</span>
         </template>
-        <el-menu-item index="container-list" @click="router.push('/container/list')">容器列表</el-menu-item>
-        <el-menu-item index="container-logs" @click="router.push('/container/logs')">日志消息</el-menu-item>
+        <el-menu-item index="docker-container-list" @click="router.push('/docker-container/list')">容器列表</el-menu-item>
+        <el-menu-item index="docker-container-logs" @click="router.push('/docker-container/logs')">日志消息</el-menu-item>
       </el-sub-menu>
 
-      <el-sub-menu index="image">
+      <el-sub-menu index="docker-image">
         <template #title>
           <el-icon>
             <CopyDocument />
           </el-icon>
           <span>镜像管理</span>
         </template>
-        <el-menu-item index="image-list">镜像列表</el-menu-item>
-        <el-menu-item index="image-logs">日志消息</el-menu-item>
+        <el-menu-item index="docker-image-list">镜像列表</el-menu-item>
+        <el-menu-item index="docker-image-logs">日志消息</el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="network">

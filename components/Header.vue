@@ -11,11 +11,11 @@ const router = useRouter()
       <NuxtImg src="docker-full.png" sizes="48" />
     </el-menu-item>
 
-    <div class="flex items-center w-1/3">
-      <el-input class="ml-24" placeholder="搜索..." :prefix-icon="Search" />
-    </div>
-
     <div class="flex-grow" />
+
+    <div class="flex items-center w-1/3">
+      <el-input class="mr-4" placeholder="搜索..." :prefix-icon="Search" />
+    </div>
 
     <el-menu-item index="setting">
       <el-icon>
