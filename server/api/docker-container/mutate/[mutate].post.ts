@@ -2,7 +2,8 @@ import Docker from "dockerode";
 
 export default defineEventHandler(async (event) => {
 	const { req } = event.node;
-	console.log(req);
+	const mutation = getRouterParam(event, "mutate");
+	console.log(mutation);
 
 	const docker = new Docker();
 });

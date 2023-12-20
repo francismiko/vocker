@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ElTable } from 'element-plus';
 import { Refresh, Delete, CaretRight, MoreFilled } from '@element-plus/icons-vue'
-import type { DockerImage } from '~/server/api/docker-image/query/list';
+import type { DockerImage } from '~/server/api/docker-image/query/list.get';
 import numeral from 'numeral';
 
 const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/query/info')
@@ -52,4 +52,4 @@ const handleSelectionChange = (val: DockerImage[]) => {
       </template>
     </el-table-column>
   </el-table>
-</template>~/server/api/docker-image/query/list
+</template>~/server/api/docker-image/query/list~/server/api/docker-image/query/list.get

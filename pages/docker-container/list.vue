@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ElTable } from 'element-plus';
 import { Refresh, Delete, MoreFilled } from '@element-plus/icons-vue'
-import type { DockerContainer } from '~/server/api/docker-container/query/list';
+import type { DockerContainer } from '~/server/api/docker-container/query/list.get';
+
 
 const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/query/info')
 const { data: dockerContainerList, pending: dockerContainerListPending, refresh: dockerContainerListRefresh } = await useLazyFetch('/api/docker-container/query/list')
@@ -33,8 +34,13 @@ const handlePauseContainer = () => {
   return
 }
 
-const handleStopContainer = () => {
-  return
+const handleStopContainer = async (containerId: string) => {
+  const res = await fetch('/api/docker-container/mutate/stop', {
+    method: 'POST',
+    body: JSON.stringify({
+      containerId
+    }),
+  })
 }
 </script>
 
@@ -85,7 +91,7 @@ const handleStopContainer = () => {
           <Icon name="material-symbols:play-arrow-rounded" />
         </el-button>
         <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
-          @click="handleStopContainer">
+          @click="handleStopContainer(scope.row.id)">
           <Icon name="material-symbols:stop-rounded" />
         </el-button>
         <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
@@ -93,4 +99,4 @@ const handleStopContainer = () => {
       </template>
     </el-table-column>
   </el-table>
-</template>~/server/api/docker-container/query/list
+</template>~/server/api/docker-container/query/list~/server/api/docker-container/query/list.get
