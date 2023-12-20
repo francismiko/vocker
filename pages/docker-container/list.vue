@@ -8,6 +8,7 @@ const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh
 const { data: dockerContainerList, pending: dockerContainerListPending, refresh: dockerContainerListRefresh } = await useLazyFetch('/api/docker-container/query/list')
 
 const search = ref<string>('')
+const mutatingContainers = ref<string[]>([])
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<DockerContainer[]>([])
 
@@ -18,16 +19,22 @@ const stateType = (state: "exited" | "running" | "paused") => {
 };
 
 const handleSelectionChange = (val: DockerContainer[]) => {
-  multipleSelection.value = val
+
 }
 
 const handleStartContainer = async (containerId: string) => {
-  const res = await fetch('/api/docker-container/mutate/start', {
+  mutatingContainers.value.push(containerId)
+  const res = await $fetch('/api/docker-container/mutate/start', {
     method: 'POST',
-    body: JSON.stringify({
+    body: {
       containerId
-    }),
+    },
   })
+  mutatingContainers.value.shift()
+
+  if (res.success) {
+    dockerContainerListRefresh()
+  }
 }
 
 const handlePauseContainer = () => {
@@ -35,12 +42,18 @@ const handlePauseContainer = () => {
 }
 
 const handleStopContainer = async (containerId: string) => {
-  const res = await fetch('/api/docker-container/mutate/stop', {
+  mutatingContainers.value.push(containerId)
+  const res = await $fetch('/api/docker-container/mutate/stop', {
     method: 'POST',
-    body: JSON.stringify({
+    body: {
       containerId
-    }),
+    },
   })
+  mutatingContainers.value.shift()
+
+  if (res.success) {
+    dockerContainerListRefresh()
+  }
 }
 </script>
 
@@ -74,7 +87,9 @@ const handleStopContainer = async (containerId: string) => {
     <el-table-column prop="name" label="名称" />
     <el-table-column prop="state" label="状态">
       <template #default="scope">
-        <el-tag :type="stateType(scope.row.state)">{{ useStartCase(scope.row.state) }}</el-tag>
+        <el-tag :type="stateType(scope.row.state)" v-loading="mutatingContainers.includes(scope.row.id)">
+          {{ useStartCase(scope.row.state) }}
+        </el-tag>
       </template>
     </el-table-column>
     <el-table-column prop="image" label="镜像源" />
@@ -86,13 +101,13 @@ const handleStopContainer = async (containerId: string) => {
         <el-input v-model="search" size="default" placeholder="搜索容器..." />
       </template>
       <template #default="scope">
-        <el-button v-if="scope.row.state === 'exited' || scope.row.state === 'paused'" size="small" type="primary" plain
-          circle @click="handleStartContainer(scope.row.id)">
-          <Icon name="material-symbols:play-arrow-rounded" />
+        <el-button v-if="scope.row.state === 'exited'" size="small" type="primary" plain circle
+          @click="handleStartContainer(scope.row.id)">
+          <Icon size="16" name="material-symbols:play-arrow-rounded" />
         </el-button>
         <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
           @click="handleStopContainer(scope.row.id)">
-          <Icon name="material-symbols:stop-rounded" />
+          <Icon size="16" name="material-symbols:stop-rounded" />
         </el-button>
         <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
         <el-button size="small" type="danger" :icon="Delete" plain circle />
