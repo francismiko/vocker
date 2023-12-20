@@ -1,3 +1,4 @@
+import numeral from "numeral";
 import si from "systeminformation";
 
 export type HardwareInfo = {
@@ -68,9 +69,7 @@ export default defineEventHandler(async () => {
 		hardwareInfo: {
 			manufacturer: system.manufacturer,
 			model: system.model,
-			memMax: `${Math.floor(
-				(baseboard.memMax as number) / (1024 * 1024 * 1024),
-			)} GB`,
+			memMax: `${numeral(baseboard.memMax).format("0b")}`,
 			brand: cpu.brand,
 			vendor: cpu.vendor,
 			speed: `${cpu.speed} GHz`,
@@ -79,7 +78,7 @@ export default defineEventHandler(async () => {
 			cores: cpu.cores,
 			processors: cpu.processors,
 			gpuModel: gpu.controllers[0].model,
-			diskSize: `${Math.floor(disk[0].size / (1024 * 1024 * 1024))} GB`,
+			diskSize: `${numeral(disk[0].size).format("0.00 b")}`,
 			diskType: disk[0].type,
 			diskVendor: disk[0].vendor,
 		},
