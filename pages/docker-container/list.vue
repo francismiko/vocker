@@ -10,7 +10,7 @@ const search = ref<string>('')
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<DockerContainer[]>([])
 
-const stateType = (state: string) => {
+const stateType = (state: "exited" | "running" | "paused") => {
   if (state === "exited") return "info"
   if (state === "running") return "success"
   if (state === "paused") return "warning"
@@ -20,6 +20,17 @@ const handleSelectionChange = (val: DockerContainer[]) => {
   multipleSelection.value = val
 }
 
+const handleStartContainer = () => {
+  return
+}
+
+const handlePauseContainer = () => {
+  return
+}
+
+const handleStopContainer = () => {
+  return
+}
 </script>
 
 <template>
@@ -64,7 +75,14 @@ const handleSelectionChange = (val: DockerContainer[]) => {
         <el-input v-model="search" size="default" placeholder="搜索容器..." />
       </template>
       <template #default="scope">
-        <el-button size="small" type="primary" :icon="CaretRight" plain circle />
+        <el-button v-if="scope.row.state === 'exited' || scope.row.state === 'paused'" size="small" type="primary" plain
+          circle @click="handleStartContainer">
+          <Icon name="material-symbols:play-arrow-rounded" />
+        </el-button>
+        <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
+          @click="handleStopContainer">
+          <Icon name="material-symbols:stop-rounded" />
+        </el-button>
         <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
         <el-button size="small" type="danger" :icon="Delete" plain circle />
       </template>
