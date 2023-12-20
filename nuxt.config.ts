@@ -7,5 +7,6 @@ export default defineNuxtConfig({
 		"@nuxtjs/tailwindcss",
 		"@nuxt/image",
 		"dayjs-nuxt",
+		"nuxt-lodash",
 	],
 });
