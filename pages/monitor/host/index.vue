@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: hostInfo, pending: hostInfoPending } = await useLazyFetch('/api/monitor/host')
+const { data: hostInfo, pending: hostInfoPending } = await useLazyFetch('/api/monitor/query/host')
 
 const hardwareInfoMap: Record<string, string> = {
   manufacturer: '制造商',

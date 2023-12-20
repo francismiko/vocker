@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { ElTable } from 'element-plus';
-import { Refresh, Delete, CaretRight, MoreFilled } from '@element-plus/icons-vue'
-import type { DockerContainer } from '~/server/api/docker-container/list';
+import { Refresh, Delete, MoreFilled } from '@element-plus/icons-vue'
+import type { DockerContainer } from '~/server/api/docker-container/query/list';
 
-const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/info')
-const { data: dockerContainerList, pending: dockerContainerListPending, refresh: dockerContainerListRefresh } = await useLazyFetch('/api/docker-container/list')
+const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/query/info')
+const { data: dockerContainerList, pending: dockerContainerListPending, refresh: dockerContainerListRefresh } = await useLazyFetch('/api/docker-container/query/list')
 
 const search = ref<string>('')
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
@@ -20,8 +20,13 @@ const handleSelectionChange = (val: DockerContainer[]) => {
   multipleSelection.value = val
 }
 
-const handleStartContainer = () => {
-  return
+const handleStartContainer = async (containerId: string) => {
+  const res = await fetch('/api/docker-container/mutate/start', {
+    method: 'POST',
+    body: JSON.stringify({
+      containerId
+    }),
+  })
 }
 
 const handlePauseContainer = () => {
@@ -76,7 +81,7 @@ const handleStopContainer = () => {
       </template>
       <template #default="scope">
         <el-button v-if="scope.row.state === 'exited' || scope.row.state === 'paused'" size="small" type="primary" plain
-          circle @click="handleStartContainer">
+          circle @click="handleStartContainer(scope.row.id)">
           <Icon name="material-symbols:play-arrow-rounded" />
         </el-button>
         <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
@@ -88,4 +93,4 @@ const handleStopContainer = () => {
       </template>
     </el-table-column>
   </el-table>
-</template>
+</template>~/server/api/docker-container/query/list
