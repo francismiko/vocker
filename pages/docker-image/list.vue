@@ -11,12 +11,6 @@ const search = ref<string>('')
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<DockerImage[]>([])
 
-const stateType = (state: string) => {
-  if (state === "exited") return "info"
-  if (state === "running") return "success"
-  if (state === "paused") return "warning"
-};
-
 const handleSelectionChange = (val: DockerImage[]) => {
   multipleSelection.value = val
 }
@@ -41,7 +35,8 @@ const handleSelectionChange = (val: DockerImage[]) => {
   <el-table v-else ref="multipleTableRef" :data="dockerImageList!" height="600" style="width: 100%"
     @selection-change="handleSelectionChange" v-loading="dockerImageListPending || dockerInfoPending">
     <el-table-column type="selection" width="55" />
-    <el-table-column prop="repoTags" label="名称" />
+    <el-table-column prop="name" label="名称" />
+    <el-table-column prop="tag" label="标签" />
     <el-table-column prop="size" label="大小"
       :formatter="(row, column, cellValue, index) => numeral(cellValue).format('0.00 b')" />
     <el-table-column prop="created" label="创建时间"
