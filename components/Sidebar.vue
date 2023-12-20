@@ -55,8 +55,8 @@ const router = useRouter()
           </el-icon>
           <span>镜像管理</span>
         </template>
-        <el-menu-item index="docker-image-list">镜像列表</el-menu-item>
-        <el-menu-item index="docker-image-logs">日志消息</el-menu-item>
+        <el-menu-item index="docker-image-list" @click="router.push('/docker-image/list')">镜像列表</el-menu-item>
+        <el-menu-item index="docker-image-logs" @click="router.push('/docker-image/logs')">日志消息</el-menu-item>
       </el-sub-menu>
 
       <el-sub-menu index="network">

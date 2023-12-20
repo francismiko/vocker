@@ -14,6 +14,7 @@
     "@element-plus/nuxt": "^1.0.7",
     "@nuxt/image": "latest",
     "@nuxtjs/tailwindcss": "latest",
+    "@types/numeral": "^2.0.5",
     "dayjs-nuxt": "^2.1.9",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.7",
@@ -25,6 +26,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@popperjs/core": "^2.11.8",
     "element-plus": "^2.4.4",
+    "numeral": "^2.0.6",
     "systeminformation": "^5.21.20"
   }
 }

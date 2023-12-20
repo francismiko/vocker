@@ -10,4 +10,8 @@ export default defineNuxtConfig({
 		"nuxt-lodash",
 		"nuxt-icon",
 	],
+	dayjs: {
+		locales: ["zh-cn", "en"],
+		defaultLocale: "zh-cn",
+	},
 });
