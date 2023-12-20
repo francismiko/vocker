@@ -19,7 +19,7 @@ const router = useRouter()
 <template>
   <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse">
     <li class="text-center">
-      <el-button @click="() => isCollapse = !isCollapse">
+      <el-button size="small" @click="() => isCollapse = !isCollapse">
         {{ isCollapse ? "展开" : "折叠" }}
       </el-button>
     </li>

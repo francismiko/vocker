@@ -16,6 +16,7 @@
     "@nuxtjs/tailwindcss": "latest",
     "dayjs-nuxt": "^2.1.9",
     "nuxt": "^3.8.2",
+    "nuxt-icon": "^0.6.7",
     "nuxt-lodash": "^2.5.3",
     "vue": "^3.3.12",
     "vue-router": "^4.2.5"
