@@ -11,7 +11,6 @@ export type DockerImage = {
 
 export default defineEventHandler(async () => {
 	const dockerImages = await si.dockerImages();
-	console.log(dockerImages);
 
 	const dockerImageList: DockerImage[] = dockerImages.map(
 		(image: DockerImage) => {
