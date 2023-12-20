@@ -52,4 +52,4 @@ const handleSelectionChange = (val: DockerImage[]) => {
       </template>
     </el-table-column>
   </el-table>
-</template>~/server/api/docker-image/query/list~/server/api/docker-image/query/list.get
+</template>

@@ -114,4 +114,4 @@ const handleStopContainer = async (containerId: string) => {
       </template>
     </el-table-column>
   </el-table>
-</template>~/server/api/docker-container/query/list~/server/api/docker-container/query/list.get
+</template>
