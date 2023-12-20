@@ -58,60 +58,63 @@ const handleStopContainer = async (containerId: string) => {
 </script>
 
 <template>
-  <div class="flex w-full">
-    <el-button type="primary" :icon="Refresh" plain @click="() => {
-      dockerInfoRefresh()
-      dockerContainerListRefresh()
-    }" :loading="dockerContainerListPending || dockerInfoPending">
-      刷新
-    </el-button>
-    <el-button-group v-show="!isEmpty(multipleSelection)" class="ml-auto mr-4">
-      <el-button type="primary">
-        <Icon size="24px" name="material-symbols:play-arrow-rounded" />
-      </el-button>
-      <el-button type="primary">
-        <Icon size="24px" name="material-symbols:pause" />
-      </el-button>
-      <el-button type="primary">
-        <Icon size="24px" name="material-symbols:stop-rounded" />
-      </el-button>
-      <el-button type="danger">
-        <Icon size="24px" name="material-symbols:delete" />
-      </el-button>
-    </el-button-group>
-  </div>
   <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending" />
-  <el-table v-else ref="multipleTableRef" :data="dockerContainerList!" height="600" style="width: 100%"
-    @selection-change="handleSelectionChange" v-loading="dockerContainerListPending || dockerInfoPending">
-    <el-table-column type="selection" width="55" />
-    <el-table-column prop="name" label="名称" />
-    <el-table-column prop="state" label="状态">
-      <template #default="scope">
-        <el-tag :type="stateType(scope.row.state)" v-loading="mutatingContainers.includes(scope.row.id)">
-          {{ useStartCase(scope.row.state) }}
-        </el-tag>
-      </template>
-    </el-table-column>
-    <el-table-column prop="image" label="镜像源" />
-    <el-table-column prop="platform" label="平台" :formatter="(row, column, cellValue, index) => useStartCase(cellValue)" />
-    <el-table-column prop="started" label="上次运行"
-      :formatter="(row, column, cellValue, index) => $dayjs.unix(cellValue).fromNow()" />
-    <el-table-column align="right">
-      <template #header>
-        <el-input v-model="search" size="default" placeholder="搜索容器..." />
-      </template>
-      <template #default="scope">
-        <el-button v-if="scope.row.state === 'exited'" size="small" type="primary" plain circle
-          @click="handleStartContainer(scope.row.id)">
-          <Icon size="16" name="material-symbols:play-arrow-rounded" />
+  <div v-else>
+    <div class="flex w-full">
+      <el-button type="primary" :icon="Refresh" plain @click="() => {
+        dockerInfoRefresh()
+        dockerContainerListRefresh()
+      }" :loading="dockerContainerListPending || dockerInfoPending">
+        刷新
+      </el-button>
+      <el-button-group v-show="!isEmpty(multipleSelection)" class="ml-auto mr-4">
+        <el-button type="primary">
+          <Icon size="24px" name="material-symbols:play-arrow-rounded" />
         </el-button>
-        <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
-          @click="handleStopContainer(scope.row.id)">
-          <Icon size="16" name="material-symbols:stop-rounded" />
+        <el-button type="primary">
+          <Icon size="24px" name="material-symbols:pause" />
         </el-button>
-        <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
-        <el-button size="small" type="danger" :icon="Delete" plain circle />
-      </template>
-    </el-table-column>
-  </el-table>
+        <el-button type="primary">
+          <Icon size="24px" name="material-symbols:stop-rounded" />
+        </el-button>
+        <el-button type="danger">
+          <Icon size="24px" name="material-symbols:delete" />
+        </el-button>
+      </el-button-group>
+    </div>
+    <el-table ref="multipleTableRef" :data="dockerContainerList!" height="600" style="width: 100%"
+      @selection-change="handleSelectionChange" v-loading="dockerContainerListPending || dockerInfoPending">
+      <el-table-column type="selection" width="55" />
+      <el-table-column prop="name" label="名称" />
+      <el-table-column prop="state" label="状态">
+        <template #default="scope">
+          <el-tag :type="stateType(scope.row.state)" v-loading="mutatingContainers.includes(scope.row.id)">
+            {{ useStartCase(scope.row.state) }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="image" label="镜像源" />
+      <el-table-column prop="platform" label="平台"
+        :formatter="(row, column, cellValue, index) => useStartCase(cellValue)" />
+      <el-table-column prop="started" label="上次运行"
+        :formatter="(row, column, cellValue, index) => $dayjs.unix(cellValue).fromNow()" />
+      <el-table-column align="right">
+        <template #header>
+          <el-input v-model="search" size="default" placeholder="搜索容器..." />
+        </template>
+        <template #default="scope">
+          <el-button v-if="scope.row.state === 'exited'" size="small" type="primary" plain circle
+            @click="handleStartContainer(scope.row.id)">
+            <Icon size="16" name="material-symbols:play-arrow-rounded" />
+          </el-button>
+          <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
+            @click="handleStopContainer(scope.row.id)">
+            <Icon size="16" name="material-symbols:stop-rounded" />
+          </el-button>
+          <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
+          <el-button size="small" type="danger" :icon="Delete" plain circle />
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
