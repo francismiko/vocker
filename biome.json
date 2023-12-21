@@ -5,6 +5,7 @@
 	},
 	"linter": {
 		"enabled": true,
+		"ignore": [".nuxt"],
 		"rules": {
 			"recommended": true
 		}
