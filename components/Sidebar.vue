@@ -34,7 +34,7 @@ const router = useRouter()
             </el-icon>
             <span>性能监控</span>
           </template>
-          <el-menu-item index="monitor-overview" @click="router.push('/monitor/overview')">概览</el-menu-item>
+          <el-menu-item disabled index="monitor-overview" @click="router.push('/monitor/overview')">概览</el-menu-item>
           <el-menu-item index="monitor-host" @click="router.push('/monitor/host')">主机信息</el-menu-item>
         </el-sub-menu>
 
@@ -46,7 +46,8 @@ const router = useRouter()
             <span>容器管理</span>
           </template>
           <el-menu-item index="docker-container-list" @click="router.push('/docker-container/list')">容器列表</el-menu-item>
-          <el-menu-item index="docker-container-logs" @click="router.push('/docker-container/logs')">日志消息</el-menu-item>
+          <el-menu-item disabled index="docker-container-logs"
+            @click="router.push('/docker-container/logs')">日志消息</el-menu-item>
         </el-sub-menu>
 
         <el-sub-menu index="docker-image">
@@ -57,7 +58,7 @@ const router = useRouter()
             <span>镜像管理</span>
           </template>
           <el-menu-item index="docker-image-list" @click="router.push('/docker-image/list')">镜像列表</el-menu-item>
-          <el-menu-item index="docker-image-logs" @click="router.push('/docker-image/logs')">日志消息</el-menu-item>
+          <el-menu-item disabled index="docker-image-logs" @click="router.push('/docker-image/logs')">日志消息</el-menu-item>
         </el-sub-menu>
 
         <el-sub-menu index="network">
@@ -67,7 +68,7 @@ const router = useRouter()
             </el-icon>
             <span>网络管理</span>
           </template>
-          <el-menu-item index="">概览</el-menu-item>
+          <el-menu-item disabled index="">概览</el-menu-item>
         </el-sub-menu>
 
         <el-sub-menu index="Volume">
@@ -77,7 +78,7 @@ const router = useRouter()
             </el-icon>
             <span>数据卷</span>
           </template>
-          <el-menu-item index="">概览</el-menu-item>
+          <el-menu-item disabled index="">概览</el-menu-item>
         </el-sub-menu>
 
         <el-sub-menu index="cron">
@@ -87,7 +88,7 @@ const router = useRouter()
             </el-icon>
             <span>定时任务</span>
           </template>
-          <el-menu-item index="">概览</el-menu-item>
+          <el-menu-item disabled index="">概览</el-menu-item>
         </el-sub-menu>
 
         <el-menu-item index="command">

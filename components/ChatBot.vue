@@ -4,6 +4,7 @@ import { StringOutputParser } from "langchain/schema/output_parser";
 import { ChatPromptTemplate } from "langchain/prompts";
 
 const { public: { openAi } } = useRuntimeConfig();
+const { width } = useWindowSize()
 
 const drawer = ref<boolean>(false)
 const inputText = ref<string>('')
@@ -54,13 +55,13 @@ const handleChat = async () => {
     <NuxtImg src="bot-removebg.png" class="rounded-full" />
   </div>
 
-  <el-drawer v-model="drawer" title="OpenAI 驱动的 Chat Bot">
+  <el-drawer :size="width < 600 ? '100%' : 500" v-model="drawer" title="OpenAI 驱动的 Chat Bot">
     <div class="h-full">
       <main class="h-4/5 w-full">Main</main>
       <footer class="h-1/5 w-full">
         <div :class="'grid grid-cols-2 grid-rows-3 gap-4 h-full'">
           <div v-for="question in templateQuestions"
-            class="flex text-xs items-center cursor-pointer justify-center py-2 px-4 outline rounded outline-slate-300 hover:outline-slate-500 hover:bg-gray-100"
+            class="flex text-xs items-center cursor-pointer justify-center px-2 outline rounded outline-slate-300 hover:outline-slate-500 hover:bg-gray-100"
             @click="() => { inputText = question }">
             {{ question }}
           </div>
