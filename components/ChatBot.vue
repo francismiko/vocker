@@ -1,35 +1,48 @@
 <script lang="ts" setup>
+import { ChatOpenAI } from "langchain/chat_models/openai";
+import { StringOutputParser } from "langchain/schema/output_parser";
+import { ChatPromptTemplate } from "langchain/prompts";
+
+const { public: { openAi } } = useRuntimeConfig();
+
 const drawer = ref<boolean>(false)
 const inputText = ref<string>('')
 
 const templateQuestions: string[] = [
-  '你好',
-  '你好',
-  '你好',
-  '你好',
+  '如何解决Docker容器之间网络通信的问题?',
+  '如何备份和恢复Docker容器和镜像?',
+  '如何使用Dockerfile创建自定义镜像?',
+  '请列举一些Docker常用命令',
 ]
 
-const handleSubmit = async () => {
+const handleChat = async () => {
   if (!inputText.value) return
   const message = inputText.value.trim()
   inputText.value = ''
 
-  const stream: ReadableStream<Uint8Array> = await $fetch('/api/chatbot/stream', {
-    method: 'POST',
-    body: {
-      message,
-    }
-  })
+  const parser = new StringOutputParser();
+  const chatModel = new ChatOpenAI(
+    {
+      openAIApiKey: openAi.secretKey,
+      streaming: true,
+    },
+    {
+      baseURL: openAi.proxyUrl,
+    },
+  );
 
-  const decoder = new TextDecoder();
-  const reader = stream.getReader();
+  const systemTemplate = "";
 
-  let m = ''
-  for (; ;) {
-    const { done, value } = await reader.read();
-    if (done) return;
-    m += decoder.decode(value);
-    console.log(m);
+  const promptTemplate = ChatPromptTemplate.fromMessages([
+    ["system", systemTemplate],
+    ["human", message],
+  ]);
+
+  const chain = promptTemplate.pipe(chatModel).pipe(parser);
+  const stream = await chain.stream({});
+
+  for await (const chunk of stream) {
+    console.log(chunk);
   }
 }
 </script>
@@ -47,18 +60,18 @@ const handleSubmit = async () => {
       <footer class="h-1/5 w-full">
         <div :class="'grid grid-cols-2 grid-rows-3 gap-4 h-full'">
           <div v-for="question in templateQuestions"
-            class="flex items-center cursor-pointer justify-center p-4 outline rounded outline-slate-300 hover:outline-slate-500 hover:bg-gray-100"
+            class="flex text-xs items-center cursor-pointer justify-center py-2 px-4 outline rounded outline-slate-300 hover:outline-slate-500 hover:bg-gray-100"
             @click="() => { inputText = question }">
             {{ question }}
           </div>
           <div class="col-span-2 row-span-1 h-full">
-            <el-input v-model="inputText" size="large" autosize placeholder="输入你想问的问题..." @keyup.enter="handleSubmit">
+            <el-input v-model="inputText" size="large" autosize placeholder="输入你想问的问题..." @keyup.enter="handleChat">
               <template #prefix>
                 <Icon size="24px" name="logos:openai-icon" />
               </template>
               <template #suffix>
                 <el-tooltip class="box-item" effect="light" content="点击发送" placement="top">
-                  <div class="cursor-pointer" @click="handleSubmit">
+                  <div class="cursor-pointer" @click="handleChat">
                     <Icon size="20px" name="ion:paper-plane" />
                   </div>
                 </el-tooltip>
