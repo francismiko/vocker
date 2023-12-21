@@ -2,6 +2,7 @@
 import type { ElTable } from 'element-plus';
 import { Refresh, Delete, MoreFilled } from '@element-plus/icons-vue'
 import type { DockerContainer } from '~/server/api/docker-container/query/list.get';
+import type { Filters } from 'element-plus/es/components/table/src/table-column/defaults';
 
 
 const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/query/info')
@@ -18,8 +19,14 @@ const stateType = (state: "exited" | "running" | "paused") => {
   if (state === "paused") return "warning"
 };
 
-const handleSelectionChange = (val: DockerContainer[]) => {
+const stateFilters: Filters = [
+  { text: 'Running', value: 'running' },
+  { text: 'Paused', value: 'paused' },
+  { text: 'Exited', value: 'exited' }
+]
 
+const handleSelectionChange = (val: DockerContainer[]) => {
+  multipleSelection.value = val
 }
 
 const handleStartContainer = async (containerId: string) => {
@@ -55,6 +62,10 @@ const handleStopContainer = async (containerId: string) => {
     dockerContainerListRefresh()
   }
 }
+
+const filterState = (value: string, row: DockerContainer) => {
+  return row.state === value
+}
 </script>
 
 <template>
@@ -82,11 +93,18 @@ const handleStopContainer = async (containerId: string) => {
         </el-button>
       </el-button-group>
     </div>
+    <el-tabs @tab-click="">
+      <el-tab-pane label="所有容器" name="first" />
+      <el-tab-pane label="2" name="second" />
+      <el-tab-pane label="3" name="third" />
+      <el-tab-pane label="4" name="fourth" />
+    </el-tabs>
     <el-table ref="multipleTableRef" :data="dockerContainerList!" height="600" style="width: 100%"
       @selection-change="handleSelectionChange" v-loading="dockerContainerListPending || dockerInfoPending">
       <el-table-column type="selection" width="55" />
       <el-table-column prop="name" label="名称" />
-      <el-table-column prop="state" label="状态">
+      <el-table-column prop="state" label="状态" :filters="stateFilters" :filter-method="filterState"
+        filter-placement="right-start">
         <template #default="scope">
           <el-tag :type="stateType(scope.row.state)" v-loading="mutatingContainers.includes(scope.row.id)">
             {{ useStartCase(scope.row.state) }}
@@ -96,7 +114,7 @@ const handleStopContainer = async (containerId: string) => {
       <el-table-column prop="image" label="镜像源" />
       <el-table-column prop="platform" label="平台"
         :formatter="(row, column, cellValue, index) => useStartCase(cellValue)" />
-      <el-table-column prop="started" label="上次运行"
+      <el-table-column prop="started" label="上次运行" sortable
         :formatter="(row, column, cellValue, index) => $dayjs.unix(cellValue).fromNow()" />
       <el-table-column align="right">
         <template #header>
