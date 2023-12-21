@@ -30,6 +30,23 @@ const handleSelectionChange = (val: DockerContainer[]) => {
   multipleSelection.value = val
 }
 
+const handleRefresh = async () => {
+  try {
+    await dockerInfoRefresh();
+    await dockerContainerListRefresh();
+    ElMessage({
+      message: '数据同步完成',
+      type: 'success',
+    });
+  } catch (error) {
+    ElMessage({
+      message: '数据同步失败',
+      type: 'error',
+    });
+  }
+};
+
+
 const handleContainerMutation = async (containerId: string, Mutation: DockerContainerMutations) => {
   mutatingContainers.value.push(containerId);
   const res = await $fetch(`/api/docker-container/mutate/${Mutation}`, {
@@ -41,7 +58,16 @@ const handleContainerMutation = async (containerId: string, Mutation: DockerCont
   mutatingContainers.value.shift();
 
   if (res.success) {
-    dockerContainerListRefresh();
+    await dockerContainerListRefresh();
+    ElMessage({
+      message: '容器操作完成',
+      type: 'success',
+    })
+  } else {
+    ElMessage({
+      message: '容器操作失败',
+      type: 'error',
+    })
   }
 };
 
@@ -54,10 +80,8 @@ const filterState = (value: string, row: DockerContainer) => {
   <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending" />
   <div v-else>
     <div class="flex w-full">
-      <el-button type="primary" :icon="Refresh" plain @click="() => {
-        dockerInfoRefresh()
-        dockerContainerListRefresh()
-      }" :loading="dockerContainerListPending || dockerInfoPending">
+      <el-button type="primary" :icon="Refresh" plain @click="handleRefresh"
+        :loading="dockerContainerListPending || dockerInfoPending">
         刷新
       </el-button>
       <el-button-group v-show="!isEmpty(multipleSelection)" class="ml-auto mr-4">
