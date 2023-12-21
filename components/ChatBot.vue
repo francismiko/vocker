@@ -14,12 +14,23 @@ const handleSubmit = async () => {
   const message = inputText.value.trim()
   inputText.value = ''
 
-  const res = await $fetch('/api/chatbot/stream', {
+  const stream: ReadableStream<Uint8Array> = await $fetch('/api/chatbot/stream', {
     method: 'POST',
     body: {
       message,
     }
   })
+
+  const decoder = new TextDecoder();
+  const reader = stream.getReader();
+
+  let m = ''
+  for (; ;) {
+    const { done, value } = await reader.read();
+    if (done) return;
+    m += decoder.decode(value);
+    console.log(m);
+  }
 }
 </script>
 
