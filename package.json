@@ -29,6 +29,7 @@
     "@popperjs/core": "^2.11.8",
     "dockerode": "^4.0.0",
     "element-plus": "^2.4.4",
+    "langchain": "^0.0.211",
     "numeral": "^2.0.6",
     "systeminformation": "^5.21.20"
   }
