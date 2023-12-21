@@ -3,6 +3,7 @@ import type { ElTable } from 'element-plus';
 import { Refresh, Delete, MoreFilled } from '@element-plus/icons-vue'
 import type { DockerContainer } from '~/server/api/docker-container/query/list.get';
 import type { Filters } from 'element-plus/es/components/table/src/table-column/defaults';
+import type { DockerContainerMutations } from '~/server/api/docker-container/mutate/[mutate].post';
 
 
 const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/query/info')
@@ -29,39 +30,20 @@ const handleSelectionChange = (val: DockerContainer[]) => {
   multipleSelection.value = val
 }
 
-const handleStartContainer = async (containerId: string) => {
-  mutatingContainers.value.push(containerId)
-  const res = await $fetch('/api/docker-container/mutate/start', {
+const handleContainerMutation = async (containerId: string, Mutation: DockerContainerMutations) => {
+  mutatingContainers.value.push(containerId);
+  const res = await $fetch(`/api/docker-container/mutate/${Mutation}`, {
     method: 'POST',
     body: {
-      containerId
+      containerId,
     },
-  })
-  mutatingContainers.value.shift()
+  });
+  mutatingContainers.value.shift();
 
   if (res.success) {
-    dockerContainerListRefresh()
+    dockerContainerListRefresh();
   }
-}
-
-const handlePauseContainer = () => {
-  return
-}
-
-const handleStopContainer = async (containerId: string) => {
-  mutatingContainers.value.push(containerId)
-  const res = await $fetch('/api/docker-container/mutate/stop', {
-    method: 'POST',
-    body: {
-      containerId
-    },
-  })
-  mutatingContainers.value.shift()
-
-  if (res.success) {
-    dockerContainerListRefresh()
-  }
-}
+};
 
 const filterState = (value: string, row: DockerContainer) => {
   return row.state === value
@@ -122,11 +104,15 @@ const filterState = (value: string, row: DockerContainer) => {
         </template>
         <template #default="scope">
           <el-button v-if="scope.row.state === 'exited'" size="small" type="primary" plain circle
-            @click="handleStartContainer(scope.row.id)">
+            @click="handleContainerMutation(scope.row.id, 'start')">
+            <Icon size="16" name="material-symbols:play-arrow-rounded" />
+          </el-button>
+          <el-button v-if="scope.row.state === 'paused'" size="small" type="primary" plain circle
+            @click="handleContainerMutation(scope.row.id, 'unpause')">
             <Icon size="16" name="material-symbols:play-arrow-rounded" />
           </el-button>
           <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
-            @click="handleStopContainer(scope.row.id)">
+            @click="handleContainerMutation(scope.row.id, 'stop')">
             <Icon size="16" name="material-symbols:stop-rounded" />
           </el-button>
           <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
