@@ -18,7 +18,7 @@ const router = useRouter()
 
 <template>
   <el-scrollbar height="90vh">
-    <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="isCollapse">
+    <el-menu unique-opened class="el-menu-vertical-demo" :collapse="isCollapse">
       <li class="text-center">
         <el-button size="small" @click="() => isCollapse = !isCollapse">
           {{ isCollapse ? "展开" : "折叠" }}
