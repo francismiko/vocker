@@ -8,6 +8,9 @@ const templateQuestions = [
   '你好',
   '你好',
 ]
+
+const handleSubmit = async () => {
+}
 </script>
 
 <template>
@@ -27,12 +30,16 @@ const templateQuestions = [
             {{ q }}
           </div>
           <div class="col-span-2 row-span-1 h-full">
-            <el-input v-model="inputText" size="large" autosize placeholder="输入你想问的问题...">
+            <el-input v-model="inputText" size="large" autosize placeholder="输入你想问的问题..." @keyup.enter="handleSubmit">
               <template #prefix>
                 <Icon size="24px" name="logos:openai-icon" />
               </template>
               <template #suffix>
-                <Icon size="20px" name="ion:paper-plane" />
+                <el-tooltip class="box-item" effect="light" content="点击发送" placement="top">
+                  <div class="cursor-pointer" @click="handleSubmit">
+                    <Icon size="20px" name="ion:paper-plane" />
+                  </div>
+                </el-tooltip>
               </template>
             </el-input>
           </div>
