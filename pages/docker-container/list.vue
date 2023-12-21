@@ -105,7 +105,7 @@ const filterState = (value: string, row: DockerContainer) => {
       <el-tab-pane label="3" name="third" />
       <el-tab-pane label="4" name="fourth" />
     </el-tabs>
-    <el-table ref="multipleTableRef" :data="dockerContainerList!" height="600" style="width: 100%"
+    <el-table ref="multipleTableRef" :data="dockerContainerList!" height="509" style="width: 100%"
       @selection-change="handleSelectionChange" v-loading="dockerContainerListPending || dockerInfoPending">
       <el-table-column type="selection" width="55" />
       <el-table-column prop="name" label="名称" />

@@ -8,8 +8,9 @@
         <Sidebar />
       </el-aside>
       <el-main>
-        <el-scrollbar height="85vh">
+        <el-scrollbar height="80vh">
           <slot />
+          <ChatBot />
         </el-scrollbar>
       </el-main>
     </el-container>
