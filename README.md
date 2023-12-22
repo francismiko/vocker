@@ -1,4 +1,7 @@
-![vocker](./public/docker-full.svg)
+<p align="center">
+<img src="./public/docker-full.svg" alt="License" />
+</p>
+
 
 <h1 align="center">Vocker</h1>
 
@@ -8,6 +11,7 @@
 <p align="center">
 <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
 </p>
+
 
 ## ✨Quickstart✨
 
