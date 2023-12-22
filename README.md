@@ -1,10 +1,14 @@
-# Nuxt 3 Minimal Starter
+![vocker](/Users/francis/Project/Nuxt/vocker/public/docker-full.svg)
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+# Vocker
 
-## Setup
+Docker client visual operation panel developed based on Nuxt stacks powered by AI
 
-Make sure to install the dependencies:
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
+## ✨Quickstart✨
+
+### 🔗 Make sure to install the dependencies:
 
 ```bash
 # npm
@@ -20,9 +24,7 @@ yarn install
 bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+### 🖥️ Start the service running on the local port <7000> and a LAN IP address:
 
 ```bash
 # npm
@@ -38,38 +40,9 @@ yarn dev
 bun run dev
 ```
 
-## Production
+### 🫡 When using the built-in chatbot, be sure to create a new dotenv file and attach your own private keys:
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+NUXT_OPEN_AI_SECRET_KEY=
+NUXT_OPENAI_API_PROXY_URL=
 ```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
