@@ -1,10 +1,13 @@
 ![vocker](./public/docker-full.svg)
 
-# Vocker
+<h1 align="center">Vocker</h1>
 
-Docker client visual operation panel developed based on Nuxt stacks powered by AI
+<p align="center">Docker client visual operation panel developed based on Nuxt stacks powered by AI
+</p>
 
-[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+<p align="center">
+<img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License" />
+</p>
 
 ## ✨Quickstart✨
 
