@@ -21,7 +21,7 @@ export default defineNuxtConfig({
 		"dayjs-nuxt",
 		"nuxt-lodash",
 		"nuxt-icon",
-		'@vueuse/nuxt',
+		"@vueuse/nuxt",
 	],
 	dayjs: {
 		locales: ["zh-cn", "en"],

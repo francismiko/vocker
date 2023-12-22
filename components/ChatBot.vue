@@ -8,7 +8,8 @@ const { width } = useWindowSize()
 
 const drawer = ref<boolean>(false)
 const inputText = ref<string>('')
-const question = ref<string>('如何备份和恢复Docker容器和镜像?')
+const question = ref<string>('')
+const answer = ref<string>('')
 
 const templateQuestions: string[] = [
   '如何解决Docker容器之间网络通信的问题?',
@@ -20,6 +21,8 @@ const templateQuestions: string[] = [
 const handleChat = async () => {
   if (!inputText.value) return
   const message = inputText.value.trim()
+  question.value = message
+  answer.value = ''
   inputText.value = ''
 
   const parser = new StringOutputParser();
@@ -44,7 +47,7 @@ const handleChat = async () => {
   const stream = await chain.stream({});
 
   for await (const chunk of stream) {
-    console.log(chunk);
+    answer.value += chunk;
   }
 }
 </script>
@@ -58,12 +61,13 @@ const handleChat = async () => {
 
   <el-drawer :size="width < 600 ? '100%' : 500" v-model="drawer" title="OpenAI 驱动的 Chat Bot">
     <div class="h-full">
-      <main class="h-4/5 w-full px-2 pb-8">
-        <div class="rounded-xl h-full w-full bg-slate-100">
-          <el-scrollbar height="200px">
-            <p class="text-center">{{ question }}</p>
-          </el-scrollbar>
-        </div>
+      <main class="flex flex-col h-4/5 w-full px-2 pb-8">
+        <p class="text-center px-8 py-2 text-lg italic">{{ question }}</p>
+        <el-scrollbar>
+          <span v-show="answer" class="rounded-xl inline-block text-wrap drop-shadow-md mx-2 p-4 bg-slate-100">
+            {{ answer }}
+          </span>
+        </el-scrollbar>
       </main>
       <footer class="h-1/5 w-full">
         <div :class="'grid grid-cols-2 grid-rows-3 gap-4 h-full'">
