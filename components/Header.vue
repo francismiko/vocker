@@ -13,7 +13,7 @@ const router = useRouter()
 
     <div class="flex-grow" />
 
-    <div class="flex items-center w-1/3">
+    <div class="flex items-center w-108">
       <el-input class="mr-4" placeholder="搜索..." :prefix-icon="Search" />
     </div>
 
