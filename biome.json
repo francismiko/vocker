@@ -5,7 +5,7 @@
 	},
 	"linter": {
 		"enabled": true,
-		"ignore": [".nuxt"],
+		"ignore": [".nuxt", ".output", "node_modules", "dist"],
 		"rules": {
 			"recommended": true
 		}
