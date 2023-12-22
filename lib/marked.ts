@@ -1,6 +1,5 @@
 import hljs from "highlight.js";
 import { Marked, type MarkedExtension } from "marked";
-import { baseUrl } from "marked-base-url";
 import { markedHighlight } from "marked-highlight";
 import markedKatex from "marked-katex-extension";
 
@@ -22,8 +21,4 @@ const katex: MarkedExtension = markedKatex({
 	displayMode: true,
 });
 
-export const marked = new Marked()
-	.use(basicConfig)
-	.use(highlight)
-	.use(katex)
-	.use(baseUrl);
+export const marked = new Marked().use(basicConfig).use(highlight).use(katex);

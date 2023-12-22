@@ -33,7 +33,6 @@
     "highlight.js": "^11.9.0",
     "langchain": "^0.0.211",
     "marked": "^11.1.0",
-    "marked-base-url": "^1.1.2",
     "marked-highlight": "^2.1.0",
     "marked-katex-extension": "^4.0.5",
     "numeral": "^2.0.6",
