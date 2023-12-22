@@ -30,7 +30,11 @@
     "@vueuse/nuxt": "^10.7.0",
     "dockerode": "^4.0.0",
     "element-plus": "^2.4.4",
+    "highlight.js": "^11.9.0",
     "langchain": "^0.0.211",
+    "marked": "^11.1.0",
+    "marked-highlight": "^2.1.0",
+    "marked-katex-extension": "^4.0.5",
     "numeral": "^2.0.6",
     "systeminformation": "^5.21.20"
   }
