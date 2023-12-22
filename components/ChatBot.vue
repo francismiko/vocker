@@ -3,7 +3,9 @@ import { ChatOpenAI } from "langchain/chat_models/openai";
 import { StringOutputParser } from "langchain/schema/output_parser";
 import { ChatPromptTemplate } from "langchain/prompts";
 import { marked } from "~/lib/marked";
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/github.min.css';
+import 'katex/dist/katex.min.css';
+
 
 const { public: { openAi } } = useRuntimeConfig();
 const { width } = useWindowSize();
@@ -65,13 +67,13 @@ const handleChat = async () => {
     for await (const chunk of stream) {
       answer.value += chunk;
     }
-
-    inputStatus.value = false;
   } catch (error) {
     ElMessage({
       message: '网络异常',
       type: 'error',
     })
+  } finally {
+    inputStatus.value = false;
   }
 }
 </script>
