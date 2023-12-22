@@ -1,4 +1,4 @@
-![vocker](/Users/francis/Project/Nuxt/vocker/public/docker-full.svg)
+![vocker](./public/docker-full.svg)
 
 # Vocker
 
