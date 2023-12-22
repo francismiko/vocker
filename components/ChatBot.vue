@@ -6,7 +6,6 @@ import { marked } from "~/lib/marked";
 import 'highlight.js/styles/github.min.css';
 import 'katex/dist/katex.min.css';
 
-
 const { public: { openAi } } = useRuntimeConfig();
 const { width } = useWindowSize();
 
@@ -16,7 +15,13 @@ const inputStatus = ref<boolean>(false);
 const question = ref<string>('');
 const answer = ref<string>('');
 
-const systemTemplate = "";
+const systemTemplate = `
+你是一名问答助手, 精通各种Linux运行维护以及Docker相关的技术.
+你的职责是: 回答用户提出的技术问题, 用通俗易懂的话语去讲解技术要点
+要求: 1. 回答的内容要有可信度, 不能是一派胡言乱语的话语
+2. 给出的命令行内容或者代码片段要整洁易读
+3. 杜绝回答与技术问题无关的内容, 例如: <人性考验>, <哲学思考>, <违反生活常识>, <无意义的客套话>等. 进行统一回复为:<请提出有价值的问题, 不要浪费自己的人生.>
+4. 在回答后的末尾加上一句:<以上内容仅供参考,造成严重后果概不负责.>`;
 
 const templateQuestions: string[] = [
   '如何解决Docker容器之间网络通信的问题?',
