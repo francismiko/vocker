@@ -92,7 +92,7 @@ const handleChat = async () => {
           <NuxtImg width="300px" src="chat-vocker-removebg.png" />
         </div>
         <p class="text-center px-8 py-2 text-lg italic">{{ question }}</p>
-        <span v-show="answer" v-html="marked.parse(answer)"
+        <span v-show="answer" v-html="marked.parseInline(answer)"
           class="rounded-xl backdrop-blur-sm w-full overflow-auto inline-block text-wrap drop-shadow-md p-4 bg-slate-100/80" />
       </main>
       <footer class="h-1/5 w-full">
