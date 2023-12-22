@@ -49,12 +49,12 @@ const networkInfoMap: Record<string, string> = {
 </script>
 
 <template>
-  <el-descriptions title="硬件信息：" class="mb-10" v-loading="hostInfoPending">
+  <el-descriptions title="硬件信息：" class="mb-4" v-loading="hostInfoPending">
     <el-descriptions-item v-for="(value, key) in hostInfo?.hardwareInfo" :label="`${hardwareInfoMap[key]}:`">
       <el-tag>{{ value }}</el-tag>
     </el-descriptions-item>
   </el-descriptions>
-  <el-descriptions title="软件信息：" class="mb-10" v-loading="hostInfoPending">
+  <el-descriptions title="软件信息：" class="mb-4" v-loading="hostInfoPending">
     <el-descriptions-item v-for="(value, key) in hostInfo?.softwareInfo" :label="`${softwareInfoMap[key]}:`">
       <el-tag v-if="value" type="success">{{ value }}</el-tag>
       <el-tag v-else type="danger">未安装</el-tag>
