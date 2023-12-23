@@ -10,7 +10,7 @@
       <el-main>
         <el-scrollbar height="80vh">
           <slot />
-          <Chatbot />
+          <ChatBot />
         </el-scrollbar>
       </el-main>
     </el-container>
