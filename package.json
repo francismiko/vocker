@@ -1,7 +1,15 @@
 {
-  "name": "nuxt-app",
-  "private": true,
+  "name": "vocker",
   "type": "module",
+  "version": "1.0.0",
+  "author": "Francismiko",
+  "description": "docker client visual operation panel developed based on Nuxt stacks powered by AI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Francismiko/vocker"
+  },
+  "license": "MIT",
+  "bugs": "https://github.com/Francismiko/vocker/issues",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -9,6 +17,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "check": "npx @biomejs/biome check --apply ."
+  },
+  "bin": {
+    "vocker": "./bin/dev"
   },
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
