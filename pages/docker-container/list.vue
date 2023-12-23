@@ -77,7 +77,12 @@ const filterState = (value: string, row: DockerContainer) => {
 </script>
 
 <template>
-  <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending" />
+  <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending">
+    <el-button type="primary" :icon="Refresh" plain @click="handleRefresh"
+      :loading="dockerContainerListPending || dockerInfoPending">
+      刷新
+    </el-button>
+  </el-empty>
   <div v-else>
     <div class="flex w-full">
       <el-button type="primary" :icon="Refresh" plain @click="handleRefresh"

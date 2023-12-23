@@ -15,19 +15,19 @@ const inputStatus = ref<boolean>(false);
 const question = ref<string>('');
 const answer = ref<string>('');
 
-const systemTemplate = `
-你是一名问答助手, 精通各种Linux运行维护以及Docker相关的技术.
-你的职责是: 回答用户提出的技术问题, 用通俗易懂的话语去讲解技术要点
-要求: 1. 回答的内容要有可信度, 不能是一派胡言乱语的话语
-2. 给出的命令行内容或者代码片段要整洁易读
-3. 杜绝回答与技术问题无关的内容, 例如: <人性考验>, <哲学思考>, <违反生活常识>, <无意义的客套话>等. 如果遇到无关的提问, 则进行统一回复为:"请提出有价值的问题, 不要浪费自己的人生."
-4. 如果提出的问题涉及相关命令操作, 在回答后的末尾另起一行加上一句:"以上内容仅供参考,造成严重后果概不负责."`;
+const systemTemplate = `你是一名问答助手, 精通各种Linux运行维护以及Docker相关的技术;
+你的职责是: 回答用户提出的技术问题, 用通俗易懂的话语去讲解技术要点, 并给出相关命令行操作的示例演示;
+你需要做到以下要求:
+1. 给出的命令行内容或者代码片段要整洁易读, 并且相关说明在前, 代码在后, 例如: "Linux切换到指定的路径命令如下: \`\`\`bash cd [dirName]\`\`\`";
+2. 涉及命令行的输出, 请使用代码块进行包裹, 例如: "\`\`\`bash";
+3. 杜绝回答与技术问题无关的内容, 例如: <人性考验>, <哲学思考>, <违反生活常识>, <无意义的客套话>等. 如果遇到无关的提问, 则进行统一回复为:"请提出有价值的问题, 不要浪费自己的人生";
+4. 如果提出的问题涉及相关命令操作, 在回答后的末尾另起一行加上一句:"以上内容仅供参考,造成严重后果概不负责";`;
 
 const templateQuestions: string[] = [
-  '如何解决Docker容器之间网络通信的问题?',
+  '用无序列表列举一些常用Linux命令',
   '如何备份和恢复Docker容器和镜像?',
-  '如何使用编写Docker file?请输出一个Python&MySQL集成环境的模版.',
-  '请列举一些Docker常用命令.',
+  '如何使用编写Docker file?请输出一个Python&MySQL集成环境的模版',
+  '请列举一些Docker常用命令',
 ];
 
 const typewriter = (textRef: Ref<string>, text: string, delay: number) => {
@@ -92,18 +92,21 @@ const handleChat = async () => {
 
   <el-drawer :size="width < 600 ? '100%' : 500" v-model="drawer" title="OpenAI 驱动的 Chat Bot">
     <div class="h-full">
-      <main class="flex flex-col relative h-4/5 w-full px-2 pb-8">
+      <main class="flex flex-col relative h-4/5 w-full px-2 pb-6">
         <div class="absolute inset-0 flex items-center justify-center">
           <NuxtImg width="300px" src="chat-vocker-removebg.png" />
         </div>
-        <p class="text-center px-8 py-2 text-lg italic">{{ question }}</p>
-        <span v-show="answer" v-html="marked.parseInline(answer)"
-          class="rounded-xl backdrop-blur-sm w-full overflow-auto inline-block text-wrap drop-shadow-md p-4 bg-slate-100/80" />
+        <span class="text-center shrink-0 w-full px-8 mb-4 text-lg italic truncate">{{ question }}</span>
+        <div v-show="answer"
+          class="rounded-xl whitespace-pre-wrap backdrop-blur-sm w-full overflow-auto text-wrap drop-shadow-md p-4 bg-slate-100/80">
+          <section id="document" v-html="marked.parse(answer)" />
+        </div>
+        <div class="flex-1 basis-0" />
       </main>
       <footer class="h-1/5 w-full">
         <div :class="'grid grid-cols-2 grid-rows-3 gap-4 h-full'">
           <div v-for="templateQuestion in templateQuestions"
-            class="flex shadow-md text-xs items-center cursor-pointer justify-center px-2 ring-1 rounded ring-slate-300 transition duration-300 ease-in-out transform hover:ring-[#83D691]  hover:ring-1 hover:ring-offset-2 hover:underline hover:shadow-[0px_0px_12px_2px] hover:shadow-[#68ab73]"
+            class="flex shadow-md text-xs items-center text-center cursor-pointer justify-center px-2 ring-1 rounded ring-slate-300 transition duration-300 ease-in-out transform hover:ring-[#83D691]  hover:ring-1 hover:ring-offset-2 hover:underline hover:shadow-[0px_0px_12px_2px] hover:shadow-[#68ab73]"
             @click="() => { inputText = templateQuestion }">
             {{ templateQuestion }}
           </div>
@@ -127,3 +130,34 @@ const handleChat = async () => {
     </div>
   </el-drawer>
 </template>
+
+<style>
+#document .hljs {
+  border-radius: 8px;
+  margin-top: 0rem;
+  margin-bottom: 1rem;
+  padding-top: 0.675rem;
+  padding-bottom: 0.675rem;
+}
+
+#document ol,
+#document ul {
+  margin-top: -1.2rem;
+  margin-bottom: -2.4rem;
+  padding-left: 0.8rem;
+  list-style-position: outside;
+}
+
+#document ol {
+  list-style-type: decimal;
+}
+
+#document ul {
+  list-style-image: url("docker-black.svg");
+}
+
+#document li {
+  margin-top: -0.8rem;
+  margin-bottom: -0.4rem;
+}
+</style>

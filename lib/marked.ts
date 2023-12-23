@@ -4,9 +4,10 @@ import { markedHighlight } from "marked-highlight";
 import markedKatex from "marked-katex-extension";
 
 const basicConfig: MarkedExtension = {
+	async: false,
 	pedantic: false,
 	gfm: true,
-	breaks: true,
+	breaks: false,
 };
 
 const highlight: MarkedExtension = markedHighlight({

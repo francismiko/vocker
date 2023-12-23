@@ -15,16 +15,34 @@ const handleSelectionChange = (val: DockerImage[]) => {
   multipleSelection.value = val
 }
 
+const handleRefresh = async () => {
+  try {
+    await dockerInfoRefresh();
+    await dockerImageListRefresh();
+    ElMessage({
+      message: '数据同步完成',
+      type: 'success',
+    });
+  } catch (error) {
+    ElMessage({
+      message: '数据同步失败',
+      type: 'error',
+    });
+  }
+};
 </script>
 
 <template>
-  <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending" />
+  <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending">
+    <el-button type="primary" :icon="Refresh" plain @click="handleRefresh"
+      :loading="dockerImageListPending || dockerInfoPending">
+      刷新
+    </el-button>
+  </el-empty>
   <div v-else>
     <div class="flex w-full">
-      <el-button type="primary" :icon="Refresh" plain @click="() => {
-        dockerInfoRefresh()
-        dockerImageListRefresh()
-      }" :loading="dockerImageListPending || dockerInfoPending">
+      <el-button type="primary" :icon="Refresh" plain @click="handleRefresh"
+        :loading="dockerImageListPending || dockerInfoPending">
         刷新
       </el-button>
       <el-button-group v-show="!isEmpty(multipleSelection)" class="ml-auto mr-4">
