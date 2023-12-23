@@ -1,7 +1,7 @@
 {
   "name": "vocker",
   "type": "module",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "author": "Francismiko",
   "description": "docker client visual operation panel developed based on Nuxt stacks powered by AI",
   "repository": {
@@ -13,9 +13,6 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
     "check": "npx @biomejs/biome check --apply ."
   },
   "bin": {
