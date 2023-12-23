@@ -24,7 +24,7 @@ npx vocker
 
 # pnpm
 pnpm i vocker
-npx vocker
+pnpm dlx vocker
 
 # yarn
 yarn add vocker
