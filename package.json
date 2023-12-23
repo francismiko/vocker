@@ -1,7 +1,7 @@
 {
   "name": "vocker",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.9",
   "author": "Francismiko",
   "description": "docker client visual operation panel developed based on Nuxt stacks powered by AI",
   "repository": {
