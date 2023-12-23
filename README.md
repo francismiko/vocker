@@ -18,7 +18,21 @@
 ### 🤤 You can run the command locally to start the server
 
 ``` bash
+# npm
+npm i vocker
 npx vocker
+
+# pnpm
+pnpm i vocker
+npx vocker
+
+# yarn
+yarn add vocker
+yarn dlx vocker
+
+# bun
+bun add vocker
+bunx vocker
 ```
 
 ## 🛠️Development🛠️
