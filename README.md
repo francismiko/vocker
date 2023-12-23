@@ -15,6 +15,14 @@
 
 ## ✨Quickstart✨
 
+### 🤤 You can run the command locally to start the server
+
+``` bash
+npx vocker
+```
+
+## 🛠️Development🛠️
+
 ### 🔗 Make sure to install the dependencies:
 
 ```bash
@@ -31,7 +39,7 @@ yarn install
 bun install
 ```
 
-### 🖥️ Start the service running on the local port <7000> and a LAN IP address:
+### 🖥️ Start the service running on the local port <8000> and a LAN IP address:
 
 ```bash
 # npm
