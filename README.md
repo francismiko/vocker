@@ -53,7 +53,7 @@ yarn install
 bun install
 ```
 
-### 🖥️ Start the service running on the local port <8000> and a LAN IP address:
+### 🖥️ Start the service running on the local port 3000 and a LAN IP address:
 
 ```bash
 # npm
