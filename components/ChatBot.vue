@@ -15,19 +15,19 @@ const inputStatus = ref<boolean>(false);
 const question = ref<string>('');
 const answer = ref<string>('');
 
-const systemTemplate = `你是一名问答助手, 精通各种Linux运行维护以及Docker相关的技术;
-你的职责是: 回答用户提出的技术问题, 用通俗易懂的话语去讲解技术要点, 并给出相关命令行操作的示例演示;
-你需要做到以下要求:
-1. 给出的命令行内容或者代码片段要整洁易读, 并且相关说明在前, 代码在后, 例如: "Linux切换到指定的路径命令如下: \`\`\`bash cd [dirName]\`\`\`";
-2. 涉及命令行的输出, 请使用代码块进行包裹, 例如: "\`\`\`bash";
-3. 杜绝回答与技术问题无关的内容, 例如: <人性考验>, <哲学思考>, <违反生活常识>, <无意义的客套话>等. 如果遇到无关的提问, 则进行统一回复为:"请提出有价值的问题, 不要浪费自己的人生";
-4. 如果提出的问题涉及相关命令操作, 在回答后的末尾另起一行加上一句:"以上内容仅供参考,造成严重后果概不负责";`;
+const systemTemplate = `你是一名问答助手,精通各种Linux运行维护以及Docker相关的技术;
+你的职责是: 回答用户提出的技术问题,用通俗易懂的话术讲解技术要点,并给出相关命令行操作的演示;
+你必须做到以下要求:
+1. 给出的命令行内容或者代码片段要整洁易读,并且相关说明在前,代码在后, 例如: "Linux切换到指定的路径命令如下: \`\`\`bash cd [dirName]\`\`\`";
+2. 如果是输出的是代码块,要有相关注释,涉及命令行的输出,请使用代码块进行包裹, 例如: "\`\`\`bash";
+3. 杜绝回答与技术问题无关的内容,例如:<人性考验>,<哲学思考>,<违反生活常识>,<无意义的客套话>等.如果遇到无关的提问,则进行统一回复为:"请提出有价值的问题,不要浪费自己的人生";
+4. 如果提出的问题涉及相关命令操作,在回答后的末尾另起一行加上一句:"以上内容仅供参考,造成严重后果概不负责";`;
 
 const templateQuestions: string[] = [
   '用无序列表列举一些常用Linux命令',
   '如何备份和恢复Docker容器和镜像?',
-  '如何使用编写Docker file?请输出一个Python&MySQL集成环境的模版',
-  '请列举一些Docker常用命令',
+  '输出一个Python & Redis 集成环境的Docker file 模版',
+  '以Nginx为例, 列举Docker常用命令',
 ];
 
 const typewriter = (textRef: Ref<string>, text: string, delay: number) => {
@@ -157,7 +157,7 @@ const handleChat = async () => {
 }
 
 #document li {
-  margin-top: -0.8rem;
-  margin-bottom: -0.4rem;
+  margin-top: -0.475rem;
+  margin-bottom: -0.125rem;
 }
 </style>
