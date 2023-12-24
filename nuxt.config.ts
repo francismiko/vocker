@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 		},
 	},
 	build: {
-		transpile: [/echarts/, /zrender/]
+		transpile: [/echarts/, /zrender/],
 	},
 	modules: [
 		"@element-plus/nuxt",

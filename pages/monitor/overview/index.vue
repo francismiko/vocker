@@ -1,55 +1,30 @@
 <script setup lang="ts">
 import * as echarts from 'echarts';
 
+const timer = ref<NodeJS.Timeout>()
+
 onMounted(() => {
-  const chartDom = document.getElementById('main')!;
-  const myChart = echarts.init(chartDom, null, {
-    renderer: 'svg'
-  });
+  const currentLoadChartDom = document.getElementById('currentLoad')!;
+  const currentLoadChart = echarts.init(currentLoadChartDom, null, { renderer: 'svg' });
 
-  const categories = (() => {
-    let now = new Date();
-    let res = [];
-    let len = 10;
-    while (len--) {
-      res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
-      now = new Date(+now - 1000);
-    }
-    return res;
-  })();
+  const xAxisDates: string[] = new Array(20).fill(null).map((_, index) => new Date(Date.now() - index * 1000).toLocaleTimeString().replace(/^\D*/, ''));
+  const yAxisCurrentLoads: number[] = new Array(20).fill(0);
 
-  const data: number[] = (() => {
-    let res = [];
-    let len = 10;
-    while (len--) {
-      res.push(Math.round(Math.random() * 100));
-    }
-    return res;
-  })();
-
-  const option1 =
-  {
+  const currentLoadOption: echarts.EChartsOption = {
     title: {
       text: 'CPU'
     },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
-        type: 'cross',
+        type: 'line',
         label: {
           backgroundColor: '#283b56'
         }
-      }
+      },
+      formatter: (params: any) => `${params[0].name}<br>${params.map((item: any) => `${item.seriesName}: ${item.value.toFixed(2)}%<br>`).join('')}`
     },
     legend: {},
-    toolbox: {
-      show: true,
-      feature: {
-        dataView: { readOnly: false },
-        restore: {},
-        saveAsImage: {}
-      }
-    },
     dataZoom: {
       show: false,
       start: 0,
@@ -58,8 +33,8 @@ onMounted(() => {
     xAxis: [
       {
         type: 'category',
-        boundaryGap: true,
-        data: categories
+        boundaryGap: false,
+        data: xAxisDates,
       }
     ],
     yAxis: [
@@ -69,7 +44,10 @@ onMounted(() => {
         name: '占用率',
         max: 100,
         min: 0,
-        boundaryGap: [0.2, 0.2]
+        boundaryGap: [0.2, 0.2],
+        axisLabel: {
+          formatter: '{value}%'
+        }
       }
     ],
     series: [
@@ -78,43 +56,44 @@ onMounted(() => {
         type: 'line',
         xAxisIndex: 0,
         yAxisIndex: 0,
-        data: data
+        areaStyle: {},
+        data: yAxisCurrentLoads
       }
     ]
   }
 
-  setInterval(() => {
-    let axisData = new Date().toLocaleTimeString().replace(/^\D*/, '');
+  currentLoadChart.setOption(currentLoadOption)
 
-    data.shift();
-    data.push(Math.round(Math.random() * 100));
+  timer.value = setInterval(async () => {
+    const { currentLoad } = await $fetch('/api/monitor/query/overview')
+    const currentDate = new Date().toLocaleTimeString().replace(/^\D*/, '');
 
-    categories.shift();
-    categories.push(axisData);
+    xAxisDates.shift();
+    xAxisDates.push(currentDate);
 
+    yAxisCurrentLoads.shift();
+    yAxisCurrentLoads.push(parseFloat(currentLoad.toFixed(2)));
 
-    myChart.setOption<echarts.EChartsOption>({
-      xAxis: [
-        {
-          data: categories
-        }
-      ],
-      series: [
-        {
-          data: data
-        }
-      ]
+    currentLoadChart.setOption<echarts.EChartsOption>({
+      xAxis: [{
+        data: xAxisDates
+      }],
+      series: [{
+        data: yAxisCurrentLoads
+      }],
     });
   }, 1000);
+})
 
-  myChart.setOption(option1)
+onBeforeUnmount(() => {
+  clearInterval(timer.value)
 })
 </script>
 
 <template>
   <main class="flex flex-wrap h-full w-full">
     <section class="flex-auto p-4">
-      <div id="main" class="w-[600px] h-[35vh]" />
+      <div id="currentLoad" class="w-[600px] h-[35vh]" />
     </section>
   </main>
 </template>
