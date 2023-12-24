@@ -40,6 +40,21 @@ const typewriter = (textRef: Ref<string>, text: string, delay: number) => {
   }, delay);
 };
 
+const typewriterQueue = async (textRef: Ref<string>, stream: AsyncIterable<string>, delay: number) => {
+  const streamQueue: string[] = [];
+
+  const typingInterval = setInterval(() => {
+    if (isEmpty(streamQueue)) return;
+    textRef.value += streamQueue.shift();
+  }, 20);
+
+  for await (const chunk of stream) {
+    streamQueue.push(chunk);
+  }
+
+  if (isEmpty(streamQueue)) clearInterval(typingInterval);
+}
+
 const handleChat = async () => {
   if (!inputText.value) return;
   const message = inputText.value.trim();
@@ -69,9 +84,7 @@ const handleChat = async () => {
     const chain = promptTemplate.pipe(chatModel).pipe(parser);
     const stream = await chain.stream({});
 
-    for await (const chunk of stream) {
-      answer.value += chunk;
-    }
+    await typewriterQueue(answer, stream, 20);
   } catch (error) {
     ElMessage({
       message: '网络异常',
