@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+	ssr: false,
 	typescript: {
 		shim: false,
 	},
@@ -13,6 +14,9 @@ export default defineNuxtConfig({
 				proxyUrl: process.env.NUXT_OPENAI_API_PROXY_URL,
 			},
 		},
+	},
+	build: {
+		transpile: [/echarts/, /zrender/]
 	},
 	modules: [
 		"@element-plus/nuxt",

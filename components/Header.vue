@@ -8,7 +8,7 @@ const router = useRouter()
 <template>
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" :ellipsis="false">
     <el-menu-item @click="router.push('/')">
-      <NuxtImg src="docker-full.png" sizes="48" />
+      <NuxtImg src="/docker-full.png" sizes="48" />
     </el-menu-item>
 
     <div class="flex-grow" />

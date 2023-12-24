@@ -100,14 +100,14 @@ const handleChat = async () => {
   <div
     class="fixed bottom-4 right-8 ring-4 rounded-full w-16 h-16 transition duration-300 ease-in-out transform hover:ring-[#83D691] cursor-pointer"
     @click="drawer = true">
-    <NuxtImg src="bot-removebg.png" class="rounded-full" />
+    <NuxtImg src="/bot-removebg.png" class="rounded-full" />
   </div>
 
   <el-drawer :size="width < 600 ? '100%' : 500" v-model="drawer" title="OpenAI 驱动的 Chat Bot">
     <div class="h-full">
       <main class="flex flex-col relative h-4/5 w-full px-2 pb-6">
         <div class="absolute inset-0 flex items-center justify-center">
-          <NuxtImg width="300px" src="chat-vocker-removebg.png" />
+          <NuxtImg width="300px" src="/chat-vocker-removebg.png" />
         </div>
         <span class="text-center shrink-0 w-full px-8 mb-4 text-lg italic truncate">{{ question }}</span>
         <div v-show="answer"

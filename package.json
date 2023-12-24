@@ -38,6 +38,7 @@
     "@popperjs/core": "npm:@sxzz/popperjs-es@^2.11.7",
     "@vueuse/nuxt": "^10.7.0",
     "dockerode": "^4.0.0",
+    "echarts": "^5.4.3",
     "element-plus": "^2.4.4",
     "highlight.js": "^11.9.0",
     "ipx": "^2.0.2",

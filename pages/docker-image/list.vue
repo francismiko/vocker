@@ -33,7 +33,8 @@ const handleRefresh = async () => {
 </script>
 
 <template>
-  <el-empty v-if="isEmpty(dockerInfo)" description="检测到Docker service并未开启, 请启动相关服务." v-loading="dockerInfoPending">
+  <el-empty v-if="isEmpty(dockerInfo)" image="/warning.png" description="检测到Docker 引擎并未开启, 请启动相关服务."
+    v-loading="dockerInfoPending">
     <el-button type="primary" :icon="Refresh" plain @click="handleRefresh"
       :loading="dockerImageListPending || dockerInfoPending">
       刷新

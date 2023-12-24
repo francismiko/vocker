@@ -32,7 +32,7 @@ const router = useRouter()
           </el-icon>
           <span>性能监控</span>
         </template>
-        <el-menu-item disabled index="monitor-overview" @click="router.push('/monitor/overview')">概览</el-menu-item>
+        <el-menu-item index="monitor-overview" @click="router.push('/monitor/overview')">概览</el-menu-item>
         <el-menu-item index="monitor-host" @click="router.push('/monitor/host')">主机信息</el-menu-item>
       </el-sub-menu>
 
