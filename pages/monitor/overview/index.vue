@@ -66,6 +66,8 @@ onMounted(() => {
 
   timer.value = setInterval(async () => {
     const { currentLoad } = await $fetch('/api/monitor/query/overview')
+    if (!currentLoad) return;
+
     const currentDate = new Date().toLocaleTimeString().replace(/^\D*/, '');
 
     xAxisDates.shift();

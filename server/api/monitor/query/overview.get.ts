@@ -1,4 +1,4 @@
-import si from "systeminformation";
+import osu from "node-os-utils";
 
 export type OverviewInfo = {
 	currentLoad?: number;
@@ -7,11 +7,9 @@ export type OverviewInfo = {
 };
 
 export default defineEventHandler(async () => {
-	const {
-		currentLoad: { currentLoad, currentLoadUser, currentLoadSystem },
-	} = await si.getDynamicData();
+	const currentLoad = await osu.cpu.usage();
 
-	const overviewInfo = { currentLoad, currentLoadUser, currentLoadSystem };
+	const overviewInfo: OverviewInfo = { currentLoad };
 
 	return overviewInfo;
 });
