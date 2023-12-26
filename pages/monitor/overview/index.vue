@@ -2,10 +2,13 @@
 import * as echarts from 'echarts';
 
 const timer = ref<NodeJS.Timeout>()
+const charts = ref<echarts.ECharts[]>([])
 
 onMounted(async () => {
   const currentLoadChart = echarts.init(document.getElementById('currentLoad'), null, { renderer: 'svg' });
   const currentMemChart = echarts.init(document.getElementById('currentMem'), null, { renderer: 'svg' });
+
+  charts.value.push(currentLoadChart, currentMemChart)
 
   const xAxisDates: string[] = new Array(20).fill(null).map((_, index) => new Date(Date.now() - index * 1000).toLocaleTimeString().replace(/^\D*/, ''));
   const yAxisCurrentLoads: number[] = new Array(20).fill(0);
@@ -161,6 +164,7 @@ onMounted(async () => {
 
 onBeforeUnmount(() => {
   clearInterval(timer.value)
+  charts.value.forEach(chart => chart.dispose())
 })
 </script>
 
