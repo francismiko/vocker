@@ -46,7 +46,7 @@ const typewriterQueue = async (textRef: Ref<string>, stream: AsyncIterable<strin
   const typingInterval = setInterval(() => {
     if (isEmpty(streamQueue)) return;
     textRef.value += streamQueue.shift();
-  }, 20);
+  }, delay);
 
   for await (const chunk of stream) {
     streamQueue.push(chunk);
