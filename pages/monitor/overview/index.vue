@@ -176,5 +176,8 @@ onBeforeUnmount(() => {
     <section class="flex-auto basis-1/2 p-4">
       <div id="currentMem" class="w-full h-[35vh]" />
     </section>
+    <section class="flex-auto basis-1/2 p-4">
+      <div id="" class="w-full h-[35vh]" />
+    </section>
   </main>
 </template>

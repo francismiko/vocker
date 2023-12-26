@@ -52,7 +52,11 @@ const typewriterQueue = async (textRef: Ref<string>, stream: AsyncIterable<strin
     streamQueue.push(chunk);
   }
 
-  if (isEmpty(streamQueue)) clearInterval(typingInterval);
+  while (!isEmpty(streamQueue)) {
+    textRef.value += streamQueue.shift()
+  }
+
+  clearInterval(typingInterval);
 }
 
 const handleChat = async () => {
