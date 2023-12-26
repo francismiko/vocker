@@ -166,11 +166,11 @@ onBeforeUnmount(() => {
 
 <template>
   <main class="flex flex-wrap h-full w-full">
-    <section class="flex-auto p-4">
-      <div id="currentLoad" class="w-[600px] h-[35vh]" />
+    <section class="flex-auto basis-1/2 p-4">
+      <div id="currentLoad" class="w-full h-[35vh]" />
     </section>
-    <section class="flex-auto p-4">
-      <div id="currentMem" class="w-[600px] h-[35vh]" />
+    <section class="flex-auto basis-1/2 p-4">
+      <div id="currentMem" class="w-full h-[35vh]" />
     </section>
   </main>
 </template>
