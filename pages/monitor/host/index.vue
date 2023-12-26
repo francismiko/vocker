@@ -50,18 +50,18 @@ const networkInfoMap: Record<string, string> = {
 
 <template>
   <el-descriptions title="硬件信息：" class="mb-4" v-loading="hostInfoPending">
-    <el-descriptions-item v-for="(value, key) in hostInfo?.hardwareInfo" :label="`${hardwareInfoMap[key]}:`">
+    <el-descriptions-item v-for="(value, key) in hostInfo?.hardwareInfo" :label="hardwareInfoMap[key] + ':'">
       <el-tag>{{ value }}</el-tag>
     </el-descriptions-item>
   </el-descriptions>
   <el-descriptions title="软件信息：" class="mb-4" v-loading="hostInfoPending">
-    <el-descriptions-item v-for="(value, key) in hostInfo?.softwareInfo" :label="`${softwareInfoMap[key]}:`">
+    <el-descriptions-item v-for="(value, key) in hostInfo?.softwareInfo" :label="softwareInfoMap[key] + ':'">
       <el-tag v-if="value" type="success">{{ value }}</el-tag>
       <el-tag v-else type="danger">未安装</el-tag>
     </el-descriptions-item>
   </el-descriptions>
   <el-descriptions title="默认网络接口信息：" v-loading="hostInfoPending">
-    <el-descriptions-item v-for="(value, key) in hostInfo?.networkInfo" :label="`${networkInfoMap[key]}:`">
+    <el-descriptions-item v-for="(value, key) in hostInfo?.networkInfo" :label="networkInfoMap[key] + ':'">
       <el-tag>{{ value }}</el-tag>
     </el-descriptions-item>
   </el-descriptions>
