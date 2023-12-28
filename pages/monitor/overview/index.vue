@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import * as echarts from 'echarts';
+import numeral from 'numeral';
 
 const timer = ref<NodeJS.Timeout>()
 const charts = ref<echarts.ECharts[]>([])
@@ -14,7 +15,8 @@ onMounted(async () => {
   const xAxisDates: string[] = new Array(20).fill(null).map((_, index) => new Date(Date.now() - index * 1000).toLocaleTimeString().replace(/^\D*/, ''));
   const yAxisCurrentLoads: number[] = new Array(20).fill(0);
   const yAxisCurrentMems: number[] = new Array(20).fill(0);
-  const yAxisCurrentDiskIOs: number[] = new Array(20).fill(0);
+  const yAxisCurrentDiskInput: number[] = new Array(20).fill(0);
+  const yAxisCurrentDiskOutput: number[] = new Array(20).fill(0);
 
   const { totalMemMb } = await $fetch('/api/monitor/query/overview')
 
@@ -138,7 +140,7 @@ onMounted(async () => {
           backgroundColor: '#283b56'
         }
       },
-      formatter: (params: any) => `${params[0].name}<br>${params.map((item: any) => `${item.seriesName}: ${item.value.toFixed(2)}%<br>`).join('')}`
+      formatter: (params: any) => `${params[0].name}<br>${params.map((item: any) => `${item.seriesName}: ${numeral(item.value).format('0.00b')}<br>`).join('')}`
     },
     legend: {},
     dataZoom: {
@@ -157,23 +159,30 @@ onMounted(async () => {
       {
         type: 'value',
         scale: true,
-        name: '占用率',
-        max: 100,
+        name: '读写速率',
         min: 0,
         boundaryGap: [0.2, 0.2],
         axisLabel: {
-          formatter: '{value}%'
+          formatter: (value: number) => numeral(value).format('0.00b') + '/秒'
         }
       }
     ],
     series: [
       {
-        name: 'CPU使用率',
+        name: '输入',
         type: 'line',
         xAxisIndex: 0,
         yAxisIndex: 0,
         areaStyle: {},
-        data: yAxisCurrentLoads,
+        data: yAxisCurrentDiskInput,
+      },
+      {
+        name: '输出',
+        type: 'line',
+        xAxisIndex: 0,
+        yAxisIndex: 0,
+        areaStyle: {},
+        data: yAxisCurrentDiskOutput,
       }
     ]
   }
@@ -191,12 +200,14 @@ onMounted(async () => {
     xAxisDates.shift();
     yAxisCurrentLoads.shift();
     yAxisCurrentMems.shift();
-    yAxisCurrentDiskIOs.shift();
+    yAxisCurrentDiskInput.shift();
+    yAxisCurrentDiskOutput.shift();
 
     xAxisDates.push(currentDate);
     yAxisCurrentLoads.push(parseFloat(currentLoad.toFixed(2)));
     yAxisCurrentMems.push(parseFloat((usedMemMb / 1024).toFixed(2)));
-    yAxisCurrentDiskIOs.push(parseFloat((rx_sec + wx_sec).toFixed(2)));
+    yAxisCurrentDiskInput.push(parseFloat(rx_sec.toFixed(2)));
+    yAxisCurrentDiskOutput.push(parseFloat(wx_sec.toFixed(2)));
 
     currentLoadChart.setOption<echarts.EChartsOption>({
       xAxis: [{
@@ -221,7 +232,9 @@ onMounted(async () => {
         data: xAxisDates
       }],
       series: [{
-        data: yAxisCurrentDiskIOs
+        data: yAxisCurrentDiskInput
+      }, {
+        data: yAxisCurrentDiskOutput
       }],
     });
   }, 1000);
