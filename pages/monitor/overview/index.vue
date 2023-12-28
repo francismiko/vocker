@@ -7,12 +7,14 @@ const charts = ref<echarts.ECharts[]>([])
 onMounted(async () => {
   const currentLoadChart = echarts.init(document.getElementById('currentLoad'), null, { renderer: 'svg' });
   const currentMemChart = echarts.init(document.getElementById('currentMem'), null, { renderer: 'svg' });
+  const currentDiskIOChart = echarts.init(document.getElementById('currentDiskIO'), null, { renderer: 'svg' });
 
   charts.value.push(currentLoadChart, currentMemChart)
 
   const xAxisDates: string[] = new Array(20).fill(null).map((_, index) => new Date(Date.now() - index * 1000).toLocaleTimeString().replace(/^\D*/, ''));
   const yAxisCurrentLoads: number[] = new Array(20).fill(0);
   const yAxisCurrentMems: number[] = new Array(20).fill(0);
+  const yAxisCurrentDiskIOs: number[] = new Array(20).fill(0);
 
   const { totalMemMb } = await $fetch('/api/monitor/query/overview')
 
@@ -124,23 +126,77 @@ onMounted(async () => {
     ]
   }
 
+  const currentDiskIOOption: echarts.EChartsOption = {
+    title: {
+      text: '磁盘IO'
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'line',
+        label: {
+          backgroundColor: '#283b56'
+        }
+      },
+      formatter: (params: any) => `${params[0].name}<br>${params.map((item: any) => `${item.seriesName}: ${item.value.toFixed(2)}%<br>`).join('')}`
+    },
+    legend: {},
+    dataZoom: {
+      show: false,
+      start: 0,
+      end: 100
+    },
+    xAxis: [
+      {
+        type: 'category',
+        boundaryGap: false,
+        data: xAxisDates,
+      }
+    ],
+    yAxis: [
+      {
+        type: 'value',
+        scale: true,
+        name: '占用率',
+        max: 100,
+        min: 0,
+        boundaryGap: [0.2, 0.2],
+        axisLabel: {
+          formatter: '{value}%'
+        }
+      }
+    ],
+    series: [
+      {
+        name: 'CPU使用率',
+        type: 'line',
+        xAxisIndex: 0,
+        yAxisIndex: 0,
+        areaStyle: {},
+        data: yAxisCurrentLoads,
+      }
+    ]
+  }
+
   currentLoadChart.setOption(currentLoadOption)
   currentMemChart.setOption(currentMemOption)
+  currentDiskIOChart.setOption(currentDiskIOOption)
 
   timer.value = setInterval(async () => {
-    const { currentLoad, userMemMb } = await $fetch('/api/monitor/query/overview')
-    if (!currentLoad || !userMemMb) return;
+    const { currentLoad, usedMemMb, rx_sec, wx_sec } = await $fetch('/api/monitor/query/overview')
+    if (!currentLoad || !usedMemMb || !rx_sec || !wx_sec) return;
 
     const currentDate = new Date().toLocaleTimeString().replace(/^\D*/, '');
 
     xAxisDates.shift();
-    xAxisDates.push(currentDate);
-
     yAxisCurrentLoads.shift();
-    yAxisCurrentLoads.push(parseFloat(currentLoad.toFixed(2)));
-
     yAxisCurrentMems.shift();
-    yAxisCurrentMems.push(parseFloat((userMemMb / 1024).toFixed(2)));
+    yAxisCurrentDiskIOs.shift();
+
+    xAxisDates.push(currentDate);
+    yAxisCurrentLoads.push(parseFloat(currentLoad.toFixed(2)));
+    yAxisCurrentMems.push(parseFloat((usedMemMb / 1024).toFixed(2)));
+    yAxisCurrentDiskIOs.push(parseFloat((rx_sec + wx_sec).toFixed(2)));
 
     currentLoadChart.setOption<echarts.EChartsOption>({
       xAxis: [{
@@ -157,6 +213,15 @@ onMounted(async () => {
       }],
       series: [{
         data: yAxisCurrentMems
+      }],
+    });
+
+    currentDiskIOChart.setOption<echarts.EChartsOption>({
+      xAxis: [{
+        data: xAxisDates
+      }],
+      series: [{
+        data: yAxisCurrentDiskIOs
       }],
     });
   }, 1000);
@@ -177,7 +242,7 @@ onBeforeUnmount(() => {
       <div id="currentMem" class="w-full h-[35vh]" />
     </section>
     <section class="flex-auto basis-1/2 p-4">
-      <div id="" class="w-full h-[35vh]" />
+      <div id="currentDiskIO" class="w-full h-[35vh]" />
     </section>
   </main>
 </template>
