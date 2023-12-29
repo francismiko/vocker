@@ -12,7 +12,7 @@ import {
   CreditCard
 } from '@element-plus/icons-vue'
 
-const isCollapse = ref<boolean>(true)
+const isCollapse = ref<boolean>(false)
 const router = useRouter()
 </script>
 
