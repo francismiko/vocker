@@ -143,7 +143,34 @@ const filterState = (value: string, row: DockerContainer) => {
             @click="handleContainerMutation(scope.row.id, 'stop')">
             <Icon size="16" name="material-symbols:stop-rounded" />
           </el-button>
-          <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
+          <el-dropdown trigger="click" class="ml-4 mr-8">
+            <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item disabled>
+                  <Icon size="24px" name="mingcute:terminal-box-fill" class="mr-2" />
+                  命令行打开
+                </el-dropdown-item>
+                <el-dropdown-item disabled>
+                  <Icon size="24px" name="mingcute:copy-2-fill" class="mr-2" />
+                  创建克隆
+                </el-dropdown-item>
+                <el-dropdown-item :disabled="scope.row.state !== 'running'"
+                  @click="handleContainerMutation(scope.row.id, 'pause')">
+                  <Icon size="24px" name="mingcute:pause-fill" class="mr-2" />
+                  暂停运行
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <Icon size="24px" name="mingcute:refresh-anticlockwise-1-fill" class="mr-2" />
+                  重新启动
+                </el-dropdown-item>
+                <el-dropdown-item disabled>
+                  <Icon size="24px" name="mingcute:folder-open-fill" class="mr-2" />
+                  查看文件
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
           <el-popconfirm title="确定要删除该容器吗?" confirm-button-type="danger" @confirm="() => {
             if (scope.row.state !== 'exited') return ElMessage({ message: '容器必须处于停止状态才能删除', type: 'error' })
             handleContainerMutation(scope.row.id, 'remove')
