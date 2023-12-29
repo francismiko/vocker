@@ -1,6 +1,6 @@
 import Docker from "dockerode";
 
-export type DockerContainerMutations = "start" | "pause" | "unpause" | "stop";
+export type DockerContainerMutations = "start" | "pause" | "unpause" | "stop" | "remove";
 
 export default defineEventHandler(async (event) => {
 	const { containerId } = await readBody(event);
@@ -16,7 +16,8 @@ export default defineEventHandler(async (event) => {
 		mutation !== "start" &&
 		mutation !== "pause" &&
 		mutation !== "unpause" &&
-		mutation !== "stop"
+		mutation !== "stop" &&
+		mutation !== "remove"
 	) {
 		throw new Error("Invalid mutation parameter");
 	}
@@ -40,6 +41,9 @@ export default defineEventHandler(async (event) => {
 		stop: async () => {
 			await container.stop();
 		},
+		remove: async () => {
+			await container.remove();
+		}
 	};
 
 	await mutationHandlers[mutation]();

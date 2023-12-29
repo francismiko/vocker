@@ -10,7 +10,7 @@ onMounted(async () => {
   const currentMemChart = echarts.init(document.getElementById('currentMem'), null, { renderer: 'svg' });
   const currentDiskIOChart = echarts.init(document.getElementById('currentDiskIO'), null, { renderer: 'svg' });
 
-  charts.value.push(currentLoadChart, currentMemChart)
+  charts.value.push(currentLoadChart, currentMemChart, currentDiskIOChart)
 
   const xAxisDates: string[] = new Array(20).fill(null).map((_, index) => new Date(Date.now() - index * 1000).toLocaleTimeString().replace(/^\D*/, ''));
   const yAxisCurrentLoads: number[] = new Array(20).fill(0);

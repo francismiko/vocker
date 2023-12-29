@@ -5,6 +5,7 @@ import type { DockerContainer } from '~/server/api/docker-container/query/list.g
 import type { Filters } from 'element-plus/es/components/table/src/table-column/defaults';
 import type { DockerContainerMutations } from '~/server/api/docker-container/mutate/[mutate].post';
 
+type ContainerState = "exited" | "running" | "paused";
 
 const { data: dockerInfo, pending: dockerInfoPending, refresh: dockerInfoRefresh } = await useLazyFetch('/api/docker/query/info')
 const { data: dockerContainerList, pending: dockerContainerListPending, refresh: dockerContainerListRefresh } = await useLazyFetch('/api/docker-container/query/list')
@@ -14,7 +15,7 @@ const mutatingContainers = ref<string[]>([])
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<DockerContainer[]>([])
 
-const stateType = (state: "exited" | "running" | "paused") => {
+const stateType = (state: ContainerState) => {
   if (state === "exited") return "info"
   if (state === "running") return "success"
   if (state === "paused") return "warning"
@@ -47,9 +48,9 @@ const handleRefresh = async () => {
 };
 
 
-const handleContainerMutation = async (containerId: string, Mutation: DockerContainerMutations) => {
+const handleContainerMutation = async (containerId: string, mutation: DockerContainerMutations) => {
   mutatingContainers.value.push(containerId);
-  const res = await $fetch(`/api/docker-container/mutate/${Mutation}`, {
+  const res = await $fetch(`/api/docker-container/mutate/${mutation}`, {
     method: 'POST',
     body: {
       containerId,
@@ -107,9 +108,6 @@ const filterState = (value: string, row: DockerContainer) => {
     </div>
     <el-tabs @tab-click="">
       <el-tab-pane label="所有容器" name="first" />
-      <el-tab-pane label="2" name="second" />
-      <el-tab-pane label="3" name="third" />
-      <el-tab-pane label="4" name="fourth" />
     </el-tabs>
     <el-table ref="multipleTableRef" :data="dockerContainerList!" height="509" style="width: 100%"
       @selection-change="handleSelectionChange" v-loading="dockerContainerListPending || dockerInfoPending">
@@ -137,16 +135,23 @@ const filterState = (value: string, row: DockerContainer) => {
             @click="handleContainerMutation(scope.row.id, 'start')">
             <Icon size="16" name="material-symbols:play-arrow-rounded" />
           </el-button>
-          <el-button v-if="scope.row.state === 'paused'" size="small" type="primary" plain circle
+          <el-button v-else-if="scope.row.state === 'paused'" size="small" type="primary" plain circle
             @click="handleContainerMutation(scope.row.id, 'unpause')">
             <Icon size="16" name="material-symbols:play-arrow-rounded" />
           </el-button>
-          <el-button v-if="scope.row.state === 'running'" size="small" type="primary" plain circle
+          <el-button v-else-if="scope.row.state === 'running'" size="small" type="primary" plain circle
             @click="handleContainerMutation(scope.row.id, 'stop')">
             <Icon size="16" name="material-symbols:stop-rounded" />
           </el-button>
           <el-button size="small" type="primary" :icon="MoreFilled" plain circle />
-          <el-button size="small" type="danger" :icon="Delete" plain circle />
+          <el-popconfirm title="确定要删除该容器吗?" confirm-button-type="danger" @confirm="() => {
+            if (scope.row.state !== 'exited') return ElMessage({ message: '容器必须处于停止状态才能删除', type: 'error' })
+            handleContainerMutation(scope.row.id, 'remove')
+          }">
+            <template #reference>
+              <el-button size="small" type="danger" :icon="Delete" plain circle />
+            </template>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
