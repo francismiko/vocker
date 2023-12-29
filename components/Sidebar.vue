@@ -89,11 +89,11 @@ const router = useRouter()
         <el-menu-item disabled index="">概览</el-menu-item>
       </el-sub-menu>
 
-      <el-menu-item index="command">
+      <el-menu-item index="terminal" @click="router.push('/terminal')">
         <el-icon>
           <CreditCard />
         </el-icon>
-        <template #title>命令行</template>
+        <template #title>终端</template>
       </el-menu-item>
 
       <el-menu-item-group>
