@@ -175,6 +175,9 @@ onMounted(async () => {
         yAxisIndex: 0,
         areaStyle: {},
         data: yAxisCurrentDiskInput,
+        itemStyle: {
+          color: '#8b5cf6'
+        }
       },
       {
         name: '输出',
@@ -183,6 +186,9 @@ onMounted(async () => {
         yAxisIndex: 0,
         areaStyle: {},
         data: yAxisCurrentDiskOutput,
+        itemStyle: {
+          color: '#fbbf24'
+        }
       }
     ]
   }
