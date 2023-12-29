@@ -1,6 +1,11 @@
 import Docker from "dockerode";
 
-export type DockerContainerMutations = "start" | "pause" | "unpause" | "stop" | "remove";
+export type DockerContainerMutations =
+	| "start"
+	| "pause"
+	| "unpause"
+	| "stop"
+	| "remove";
 
 export default defineEventHandler(async (event) => {
 	const { containerId } = await readBody(event);
@@ -43,7 +48,7 @@ export default defineEventHandler(async (event) => {
 		},
 		remove: async () => {
 			await container.remove();
-		}
+		},
 	};
 
 	await mutationHandlers[mutation]();

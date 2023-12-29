@@ -17,13 +17,12 @@ export default defineEventHandler(async () => {
 	const { totalMemMb, usedMemMb } = await osu.mem.info();
 	const { rx_sec, wx_sec } = await fsStats();
 
-
 	const overviewInfo: OverviewInfo = {
 		currentLoad,
 		totalMemMb,
 		usedMemMb,
 		rx_sec,
-		wx_sec
+		wx_sec,
 	};
 
 	return overviewInfo;
