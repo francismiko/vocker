@@ -22,7 +22,7 @@
     "@biomejs/biome": "1.5.3",
     "@element-plus/nuxt": "^1.0.7",
     "@nuxt/image": "latest",
-    "@nuxtjs/tailwindcss": "latest",
+    "@nuxtjs/tailwindcss": "^6.11.4",
     "@types/dockerode": "^3.3.23",
     "@types/node-os-utils": "^1.3.4",
     "@types/numeral": "^2.0.5",
