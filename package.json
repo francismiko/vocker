@@ -42,7 +42,7 @@
     "echarts": "^5.4.3",
     "element-plus": "^2.4.4",
     "highlight.js": "^11.9.0",
-    "ipx": "^2.0.2",
+    "ipx": "^3.0.1",
     "langchain": "^0.0.211",
     "marked": "^11.1.0",
     "marked-highlight": "^2.1.0",
